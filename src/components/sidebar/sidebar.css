@@ -1,0 +1,131 @@
+.sidebar {
+  width: 380px;
+  height: 100vh;
+  background: linear-gradient(rgba(255, 255, 255, 0.09),rgb(199, 195, 195),rgba(255, 255, 255, 0.09));
+  background-color: #e3e3e3;
+  border-left: solid 2px rgb(47, 10, 31);
+  color: #000000;
+  /* padding: 20px 20px; */
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  overflow-y: auto;
+  font-weight: 200;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  transform: translateX(100%);
+  font-family:  'Times New Roman';
+  letter-spacing: 2px;
+  transition: transform 1.5s ease-in-out,box-shadow 1.5s ease-in-out;
+}
+.sidebar.open {
+  box-shadow: -10px 0 30px rgb(64, 63, 64);
+  transform: translateX(0);
+}
+.sb-sct1{
+  padding:20 20 20;
+
+}
+.sb-sct2,.sb-sct3{
+  /* border-bottom: 2px solid; */
+  border-top: 3px solid rgb(103, 98, 98);
+  padding:20 20 20;
+}
+.sidebar h1,
+.sidebar h2,
+.sidebar h3,
+.sidebar h4,
+.sidebar h5 {
+  margin: 0;
+  padding: 0;
+}
+
+/* --------------------*Section 1 ----------------------------------------------*/
+.sb-sct1 {
+  margin: 20px 0 20px;
+}
+.sb-sct1-cnt1 {
+  font-size: 20;
+  color: rgb(34, 1, 19);
+  text-transform: capitalize;
+  font-family: 'Segoe UI';
+  letter-spacing: 0;
+}
+.sb-sct1-cnt2 {
+  margin-top: 25px;
+  /* gap: 20px; */
+  display: flex;
+  flex-direction: column;
+  letter-spacing: 1px;
+  font-family: system-ui, Roboto;
+}
+.sb-sct1-cnt2 h2{
+  letter-spacing: 1.5;
+  margin: 20px 0 5px 0;
+  text-transform: capitalize;
+}
+.sb-sct1-cnt2 h3{
+  font-size: 20;
+  font-weight: 500;
+  letter-spacing: 2;
+}
+
+
+
+
+
+
+/*--------------------* Section 2 ----------------------------------------------*/
+.sb-sct2 {
+  margin-bottom: 20px;
+}
+.sb-sct2 div {
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.sb-sct2-cnt1 h1{
+  color: rgb(34, 1, 19);
+  font-size: 40px;
+  font-family: cursive;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.sb-sct2-cnt1 button{
+  margin: 20px 0;
+  
+}
+
+
+
+/*--------------------* Section 3---------------------------------------------- */
+.sb-sct3 {
+  margin-top: auto;
+}
+.sb-sct3-cnt1 {
+  cursor: pointer;
+  color: #48010a;
+  font-size: 20;
+  font-weight: 500;
+  text-transform: lowercase;
+  font-family:  sans-serif;
+}
+
+
+
+
+@media (max-width: 616px) {
+  .sidebar {
+    max-width: none;
+    width: 60%;
+    height: 110vh;
+    /* min-height: 100vh; */
+  }
+}
+
+@media (max-width: 516px) {
+.sb-sct1-cnt2 h3{
+  font-size: 15;
+}
+}

@@ -1,0 +1,50 @@
+.earnings-loading {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.earnings-empty {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.earnings-container {
+  width: 95%;
+  max-width: 900px;
+  height: 400px;
+  margin: 2rem auto;
+  min-height: 300px; 
+}
+
+.earnings-title {
+    text-align: center;
+    margin: 50px ;
+    font-size: 6vw;
+    text-transform: capitalize;
+    font-weight: 800;
+    font-family:  Tahoma;
+    text-shadow: 20 20 30 ;
+    color: rgb(208, 140, 140);
+}
+.earnings-title span{
+  color: rgb(111, 166, 111);
+}
+.earnings-chart {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+}
+
+.earnings-tooltip {
+  background: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+
+@media (min-width: 1101px) {
+.earnings-title{
+  font-size: 50px;
+}
+
+}

@@ -1,0 +1,24 @@
+.single-course-sct1-cnt1{
+
+    margin:10vh auto;
+    max-width: 1250px;
+}
+.single-course-sct1-cnt1 .card{
+    width: 80%;
+    margin: 0 auto ;
+    padding: 20;
+
+}
+.single-course-sct1-cnt1 .card{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    
+}
+.single-course-sct1-cnt1 img{
+    height: fit-content!important;
+    width: 100%;
+}
+.single-course-sct1-cnt1 .cnt{
+    padding: 50px 0 ;
+}

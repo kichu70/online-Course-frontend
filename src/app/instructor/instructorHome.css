@@ -1,0 +1,100 @@
+.inst-hom-sct1-cnt1 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  justify-content: center;
+  padding: 20;
+  gap: 20;
+  max-width: 1250px;
+  margin:50px auto;
+}
+.inst-hom-sct1-cnt1 .card {
+  margin: auto;
+  width: 100%;
+  max-height: fit-content;
+}
+
+.instructor-home-h1{
+    text-align: center;
+    margin: 250px 0 0 0 ;
+    font-size: 50px;
+    text-transform: uppercase;
+    font-weight: 800;
+    font-family:  Tahoma;
+    text-shadow: 20 20 20;
+    color: rgb(73, 17, 44);
+}
+
+.inst-hom-sct1-cnt1-button{
+  align-items: center !important;
+  justify-content: center !important;
+  margin:50 auto !important;
+  max-width: 500px !important;
+
+}
+.inst-hom-sct1-cnt1-button Button{
+  max-width: 500px !important;
+  width: 100%;
+
+}
+
+.enrolled-student-list{
+  max-width: 1250px;
+  margin: auto;
+  padding: 20px;
+}
+.my-table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.table-head{
+  border: 1px solid black;
+  padding: 10px;
+  font-size: 30px;
+  text-transform: capitalize;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow';
+}
+.table-cell {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: left;
+}
+
+
+/* ================responsive=============================================== */
+
+
+@media (max-width: 1253px) {
+}
+
+@media (max-width: 1201px) {
+}
+
+@media (max-width: 1113px) {
+  .inst-hom-sct1-cnt1{
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+
+
+@media (max-width: 989px) {
+}
+
+@media (max-width: 777px) {
+  
+}
+
+@media (max-width: 756px) {
+  .instructor-home-h1{
+    margin-top: 150px;
+  }
+ .inst-hom-sct1-cnt1{
+    grid-template-columns: repeat(1,1fr);
+  }
+}
+
+@media (max-width: 670px) {
+
+}

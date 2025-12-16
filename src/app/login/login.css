@@ -1,0 +1,59 @@
+.login{
+  background-image: url("/homeImg/bg3.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  min-height: 110vh;
+  background-attachment: fixed;
+  width: 100%;
+  z-index: -20;
+}
+.section{
+    /* background-color: aqua; */
+    max-width:700px;
+    margin:15vh auto 0;
+    padding: 20px 0  15vh;
+}
+.cnt1:hover{
+    background-color: rgba(41, 41, 41, 0.61);
+
+}
+.cnt1{
+    backdrop-filter: blur(1px);
+    display: flex;
+    flex-direction: column;
+    padding: 70px 0px 30 ;
+    text-align: center;
+    /* gap: 2vw; */
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    background-color: rgba(108, 101, 101, 0.567);
+    min-height: 350px;
+}
+/* ---------------------------- */
+
+.text{
+    width: 70%;
+    margin: 10px auto !important;
+}
+.text .MuiOutlinedInput-notchedOutline {
+  border: .5px solid rgb(212, 199, 125) !important ;
+}
+.text label{
+    color: white;
+    letter-spacing: 2px;
+    font-size: 15;
+    position: absolute !important;
+}
+.text input{
+    color: white !important;
+    font-size: 20;
+}
+.submit{
+    color: white !important;
+    width: 70%;
+     margin: 10px auto !important;
+    background-color: rgb(30, 92, 150) !important;
+}

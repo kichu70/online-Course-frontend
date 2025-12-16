@@ -1,0 +1,68 @@
+.no-enrolled-course {
+  background: linear-gradient(
+    rgb(255, 255, 255),
+    rgba(230, 174, 174, 0.696),
+    rgb(248, 192, 192),
+    rgb(252, 252, 252)
+  );
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  min-height: 85vh;
+}
+.no-enrolled-course p {
+  text-align: center;
+  justify-content: center;
+  margin-top: 35vh;
+  font-size: 60;
+  color: rgb(44, 11, 31);
+
+  text-shadow: rgb(82, 76, 76) 20 20 20;
+}
+.enrollled-sct1-cnt1 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 1250px;
+  margin: 0 auto;
+  gap: 10px;
+  padding: 20px;
+}
+.enrollled-sct1-cnt1 .card{
+    margin: auto;
+    width: 100%;
+    min-height: fit-content;
+}
+
+.view-h1{
+  text-align: center;
+  color: rgb(99, 99, 99);
+}
+/* =================responsive ===================== */
+
+@media (max-width: 1401px) {
+}
+
+@media (max-width: 1253px) {
+}
+
+@media (max-width: 1201px) {
+  .enrollled-sct1-cnt1 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 989px) {
+  .enrollled-sct1-cnt1 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 777px) {
+}
+
+@media (max-width: 606px) {
+  .enrollled-sct1-cnt1 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

@@ -1,26 +1,74 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;     /* FIXED like you want */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-image: url("../../public/homeImg/bg10.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  z-index: -20;         /* behind everything */
+}
+
+
+input[type="search"]:hover {
+  border: none;
+  outline: none;
+}
+
+input[type="search"]:focus {
+  border: none;
+  outline: none;
+  box-shadow: none; 
+}
+
+input[type="search"]:active {
+  border: none;
+  outline: none;
+}
+
+.loading-course{
+  display: flex;
+  text-align: center;
+  font-size: 50;
+  justify-content: center;
+  margin-top: 20vh;
+}
+
+.network-error{
+  display: flex;
+  text-align: center;
+  font-size: 50;
+  justify-content: center;
+  margin-top: 20vh;
+  color: red;
+  text-shadow: 10 10 20 black;
+  letter-spacing: 2;
+  background-color: rgb(0, 255, 251);
+  font-family: Impact, Haettenschweiler;
+}
+
+
+.title{
+  font-size: 30px !important;
+}
+
+.price{
+  color: green;
+  
+}
+
+
+.purchased{
+  text-decoration: line-through;
 }
