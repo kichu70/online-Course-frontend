@@ -1,0 +1,60 @@
+.main-edit{
+    width: 450px;
+    text-align: start;
+    background: linear-gradient(to top,rgb(235, 123, 237),rgb(235, 214, 232));
+    height: 100vh;
+    position: fixed;
+    padding: 10px  50px ;
+    right: 0;
+    top: 0;
+    z-index: 2;
+    box-shadow: rgb(124, 124, 124) 0 0 50px;
+}
+.closebtn{
+    margin-left: 20px !important;
+    top: 10px;
+    left: 300px;
+    background-color: rgb(220, 93, 197) !important;
+}
+.edit{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.edit h1{
+    padding: 0 0 0 20px  ;
+    color: rgb(48, 12, 47);
+    font-size: 43.99px;
+    text-shadow:  -8px 8px 10px rgb(100, 83, 67);
+}
+.edit-colums{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin: 20px;
+    padding: 20px;
+    border-top: 1px solid  rgb(101, 16, 90);
+    border-right: 1px solid  rgb(98, 16, 101);
+    border-bottom: 4px solid  rgb(101, 16, 24);
+    border-left: 4px solid  rgb(101, 16, 91);
+    border-radius: 8px;
+    box-shadow: -8px 8px 15px rgb(92, 79, 94);
+
+}
+.edit-colums label{
+    color: rgb(107, 56, 31) !important;
+    font-size: 22px;
+}
+.edit-colums input{
+    color: rgb(7, 0, 0) !important;
+    /* font-family: cursive; */
+    font-weight: 500;
+    font-size: 20px;
+    text-transform: capitalize;
+}
+.textEditField .MuiFilledInput-root:after {
+  border-bottom: 2px solid rgb(151, 42, 165);
+}
+.updatebtn{
+    background-color: rgb(165, 42, 155) !important;
+}

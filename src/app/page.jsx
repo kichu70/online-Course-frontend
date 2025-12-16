@@ -57,68 +57,46 @@ export default function Home() {
     }
   }, [pathname]);
 
-  // --------------get BCA Course--------------------------
+
+
+
+  // ----------------fetch courses----------------------
   useEffect(() => {
-    const fetchdata = async () => {
+    const fetchCourses = async () => {
+      setLoading(true);
       try {
-        const res = await axios.get(`${STUDENT_API.ANY_COURSE}?category=BCA`);
-        const idReplace = res.data.data.map(({ _id, ...rest }) => ({
-          id: _id,
-          ...rest,
-        }));
-        setBCACourse(idReplace);
-        console.log(idReplace, "bca");
-        if (idReplace.length > 0) {
-          setLoading(false);
-        }
+        const [bcaRes, freeRes, paidRes] = await Promise.all([
+          axios.get(`${STUDENT_API.ANY_COURSE}?category=BCA`),
+          axios.get(`${STUDENT_API.ANY_COURSE}?price=0`),
+          axios.get(`${STUDENT_API.ANY_COURSE}`),
+        ]);
+
+        setBCACourse(
+          bcaRes.data.data.map(({ _id, ...rest }) => ({ id: _id, ...rest }))
+        );
+
+        setFreeCourse(
+          freeRes.data.data
+            .map(({ _id, ...rest }) => ({ id: _id, ...rest }))
+            .slice(0, 4)
+        );
+
+        setPaidCourse(
+          paidRes.data.data
+            .map(({ _id, ...rest }) => ({ id: _id, ...rest }))
+            .filter((c) => c.price > 0)
+            .slice(0, 4)
+        );
       } catch (err) {
-        // setLoading(false);
+        console.error("Error fetching courses:", err);
         setNetworkError(true);
-        console.log(err, "error ia in the fr all course,home");
       } finally {
         setLoading(false);
       }
     };
-    fetchdata();
-  }, []);
 
-  // -------------------free enrolles-courses----------------------
-
-  useEffect(() => {
-    const fetchdata = async () => {
-      try {
-        const res = await axios.get(`${STUDENT_API.ANY_COURSE}?price=0`);
-        const idReplace = res.data.data.map(({ _id, ...rest }) => ({
-          id: _id,
-          ...rest,
-        }));
-        setFreeCourse(idReplace.slice(0, 4));
-        console.log(idReplace, "free course");
-        setLoading(false);
-      } catch (err) {
-        console.log(err, "error ia in the fr all course,home");
-      }
-    };
-    fetchdata();
-  }, []);
-
-  // -------------------paid enrolles-----------------------
-  useEffect(() => {
-    const fetchdata = async () => {
-      try {
-        const res = await axios.get(`${STUDENT_API.ANY_COURSE}`);
-        const idReplace = res.data.data
-          .map(({ _id, ...rest }) => ({ id: _id, ...rest }))
-          .filter((course) => course.price > 0);
-        setPaidCourse(idReplace.slice(0, 4));
-        console.log(idReplace, "paid course");
-        setLoading(false);
-      } catch (err) {
-        console.log(err, "error in frontend all course, home");
-      }
-    };
-    fetchdata();
-  }, []);
+    fetchCourses();
+  }, [token]);
 
   // used for the button if the user and role is student-----------------
 
@@ -203,7 +181,7 @@ export default function Home() {
                   &nbsp;{" "}
                   <Rating
                     name="course-rating"
-                    value={BCAcourse[0]?.average_rating?? 0}
+                    value={BCAcourse[0]?.average_rating ?? 0}
                     precision={0.5}
                     readOnly
                   />
@@ -272,7 +250,7 @@ export default function Home() {
                         onClick={(e) => {
                           e.stopPropagation();
                           reusebleFunction(() =>
-                            handlePayment([BCAcourse[0]], token)
+                            handlePayment([BCAcourse[0]?.id], token)
                           );
                         }}
                       >
@@ -445,7 +423,8 @@ export default function Home() {
                     );
                   })}
                 </div>
-                <Button className="free-btn" variant="contained">
+                
+                <Button className="free-btn" onClick={()=>router.push("/student/all-courses")} variant="contained">
                   view all free courses
                 </Button>
               </div>

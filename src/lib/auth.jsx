@@ -165,7 +165,7 @@ const onFreeEnroll = async (courseId) => {
           const res = await axios.get(`${STUDENT_API.ENROLLED_COURSES}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
-          const courseIds = res.data.data.map((item) => item.course);
+          const courseIds = res.data.data.map((item) => item.course._id);
           setEnrolledCourses(courseIds);
           // console.log("Enrolled Courses:", courseIds);
         } catch (err) {

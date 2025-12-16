@@ -39,12 +39,20 @@ input[type="search"]:active {
 
 .loading-course{
   display: flex;
+  flex-direction: column;
   text-align: center;
   font-size: 50;
   justify-content: center;
   margin-top: 20vh;
 }
-
+.loading-course .btn{
+  max-width: 500px;
+  margin:20px auto;
+  background-color: rgb(93, 85, 85);
+}
+.btn-go-back{
+  font-size: 30px !important;
+}
 .network-error{
   display: flex;
   text-align: center;

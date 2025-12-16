@@ -17,7 +17,6 @@ import Typography from "@mui/material/Typography";
 
 import { handlePayment } from "@/components/payment/paymentButton";
 
-
 const page = () => {
   const [course, setCourse] = useState([]);
 
@@ -27,6 +26,7 @@ const page = () => {
     reusebleFunction,
     enrolledCourses,
     setEnrolledCourses,
+    user,
   } = useAuth();
 
   const [page, setPage] = useState(1);
@@ -59,6 +59,7 @@ const page = () => {
     fetchData();
   }, [page]);
 
+  console.log(enrolledCourses,"++++++++++++++++")
   return (
     <div className="all-course">
       <Navbar />
@@ -108,8 +109,23 @@ const page = () => {
                   {course.description}
                 </Typography>
               </CardContent>
-              <CardActions>
-                {course.price > 0 ? (
+              <CardActions
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                {token &&
+                user?.role === "student" &&
+                enrolledCourses?.includes(course.id) ? (
+                  <Button
+                    size="small"
+                    onClick={() =>
+                      router.push(`/student/all-lectures/${course.id}`)
+                    }
+                  >
+                    play
+                  </Button>
+                ) : course.price > 0 ? (
                   <Button
                     size="small"
                     onClick={(e) => {
@@ -117,10 +133,19 @@ const page = () => {
                       reusebleFunction(() => handlePayment(course.id, token));
                     }}
                   >
-                    buy now
+                    Buy Now
                   </Button>
                 ) : (
-                  <Button size="small">enroll</Button>
+                  <Button
+                    size="small"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      console.log("Clicked Course =", course?.id);
+                      reusebleFunction(() => onFreeEnroll(course?.id));
+                    }}
+                  >
+                    enroll
+                  </Button>
                 )}
                 <Button size="small">add to cart</Button>
               </CardActions>

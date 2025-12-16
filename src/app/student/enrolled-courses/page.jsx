@@ -34,18 +34,15 @@ const page = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        const enrolled = res.data.data; // [{ course: "courseId1", ... }, ...]
-        // Fetch full course details for each ID
-        const courseDetails = await Promise.all(
-          enrolled.map(async (item) => {
-            const courseRes = await axios.get(
-              `${STUDENT_API.ANY_COURSE}/?_id=${item.course}`
-            );
-            return courseRes.data.data[0]; // full course object
-          })
-        );
-        setCourse(courseDetails);
-        console.log(courseDetails, "courses");
+        const enrolled = res.data.data || [];
+        console.log(enrolled);
+        const onlyCourses = enrolled.map((item) => ({
+          ...item.course,
+          enrolledId: item._id,
+          price_at_purchase: item.price_at_purchase,
+        }));
+
+        setCourse(onlyCourses);
       } catch (err) {
         console.log(err, "error fetching courses");
       } finally {
@@ -81,58 +78,57 @@ const page = () => {
           </div>
         ) : (
           <>
-          <h1 className="view-h1">"Click course to view videos"</h1>
-          <div className="enrollled-sct1-cnt1">
-            {course.map((course) => (
-              <Card
-                sx={{ maxWidth: 445 }}
-                key={course._id}
-                className="card"
-                onClick={() =>
-                  router.push(`/student/all-lectures/${course._id}`)
-                }
-              >
-                <CardMedia
-                  className="card-media"
-                  sx={{ height: 140 }}
-                  image={`${API_BASE_URL}${course.thumbnail}`}
-                  title="green iguana"
-                />
-                <CardContent>
-                  <Typography
-                    className="title"
-                    gutterBottom
-                    variant="h5"
-                    component="div"
-                  >
-                    {course.title}
-                  </Typography>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Instructor:<span>{course?.instructor_name}</span>
-                  </Typography>
-                  <Typography
-                    gutterBottom
-                    variant="h5"
-                    component="div"
-                    className="price"
-                  >
-                    ₹ {course.price > 0 ? course.price : "Free"}
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    {course.category}
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    {course.description}
-                  </Typography>
-                </CardContent>
-                <CardActions
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                ></CardActions>
-              </Card>
-            ))}
-          </div>
+            <h1 className="view-h1">"Click course to view videos"</h1>
+            <div className="enrollled-sct1-cnt1">
+              {course.map((course) => (
+                <Card
+                  sx={{ maxWidth: 445 }}
+                  key={course._id}
+                  className="card"
+                  onClick={() =>
+                    router.push(`/student/all-lectures/${course._id}`)
+                  }
+                >
+                  <CardMedia
+                    className="card-media"
+                    sx={{ height: 140 }}
+                    image={`${API_BASE_URL}${course.thumbnail}`}
+                    title="green iguana"
+                  />
+                  <CardContent>
+                    <Typography
+                      className="title"
+                      gutterBottom
+                      variant="h5"
+                      component="div"
+                    >
+                      {course.title}
+                    </Typography>
+                    <Typography gutterBottom variant="h5" component="div">
+                      Instructor:<span>{course?.instructor?.name}</span>
+                    </Typography>
+
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "text.secondary" }}
+                    >
+                      {course.category}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "text.secondary" }}
+                    >
+                      {course.description}
+                    </Typography>
+                  </CardContent>
+                  <CardActions
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  ></CardActions>
+                </Card>
+              ))}
+            </div>
           </>
         )}
       </div>

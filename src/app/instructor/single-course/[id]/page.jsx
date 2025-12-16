@@ -13,13 +13,15 @@ import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
+import { toast } from "react-toastify"; 
 
 import Confirm from "@/components/confirmDelete/Confirm";
-import { toast } from "react-toastify";
+import EditCourse from "@/components/edit/EditCourse";
 
 const page = () => {
-  const [course, setCourse] = useState([]);
-
+  const [loading, setLoading] = useState(true); //this is used to loading time show the loading pera
+  
+  
   const { id } = useParams();
   const {
     token,
@@ -28,10 +30,16 @@ const page = () => {
     enrolledCourses,
     setEnrolledCourses,
   } = useAuth();
-
   const router = useRouter();
+  
+  
+  const [course, setCourse] = useState([]);
+  const [deleteId, setDeleteId] = useState(null);
   const [openConfirm, setOpenConfirm] = useState(false);
-  const [loading, setLoading] = useState(true); //this is used to loading time show the loading pera
+
+  const [editId, setEditId] = useState(null);
+  const [selectCourse, setSelectCourse] = useState(null);
+  const [openEdit, setopenEdit] = useState(false);
 
   // ---------------single course-------------------------
   useEffect(() => {
@@ -69,12 +77,11 @@ const page = () => {
     setOpenConfirm(true);
   };
 
-  const onhandledelete = (id) => {
+  const onhandledelete =async (id) => {
     if (!deleteId) return;
     try {
-      const dltdata = async () => {
         const res = await axios.put(
-          `${INSTRUCTOR_API.DELETE_COURSE}?id=${deleteId}`,
+          `${INSTRUCTOR_API.DELETE_COURSE}?courseId=${deleteId}`,
           {},
           {
             headers: {
@@ -85,8 +92,6 @@ const page = () => {
         console.log(res.data, "deleted");
         toast.success("book have been deleted");
         router.push("/instructor");
-      };
-      dltdata();
     } catch (err) {
       console.log(err, "error is in the delete function");
     } finally {
@@ -95,19 +100,33 @@ const page = () => {
     }
   };
 
+
+
+
+    // -----------update course------------------------
+
+  const handleUpdate = (id,course) => {
+    setEditId(id);
+    setSelectCourse(course);
+    setopenEdit(true);
+  };
+
   return (
     <div>
       <Navbar />
       <div className="single-course">
         <div className="single-course-sct1-cnt1">
+            <Button  className="btn-go-back"onClick={()=>{router.back()}}>🔙</Button>
+
           <div
             key={course.id}
             sx={{ maxWidth: 445 }}
             className="card"
-            onClick={() => router.push(`/instructor/all-lectures/${course.id}`)}
           >
-            <img src={`${API_BASE_URL}${course.thumbnail}`} alt="" />
-            <Button variant="contained">view all lecture</Button>
+            <img src={`${API_BASE_URL}${course.thumbnail}`} alt=""  />
+            <Button variant="contained" 
+            onClick={() => router.push(`/instructor/all-lectures/${course.id}`)}
+            >view all lecture</Button>
             <br />
             &nbsp;
             <Rating
@@ -151,11 +170,16 @@ const page = () => {
                 {course.description}
               </Typography>
             </div>
-            <CardActions>
-              <Button>edit</Button>
+            <CardActions onClick={(e)=>{e.stopPropagation()}}>
+              <Button
+               className="editbtn"
+                  size="small"
+                  onClick={() => handleUpdate(course.id, course)}
+              >edit</Button>
               <Button size="small" onClick={() => handleDeleteClick(course.id)}>
                 delete
               </Button>
+              
             </CardActions>
           </div>
         </div>
@@ -170,6 +194,19 @@ const page = () => {
           setDeleteId(null);
         }}
       />
+            {openEdit && (
+        <EditCourse
+          open={openEdit}
+          course={selectCourse}
+          id={editId}
+          onClose={(updateCourse) => {
+            setopenEdit(false);
+            if (updateCourse) {
+              setCourse(updateCourse);
+            }
+          }}
+        />
+      )}
     </div>
   );
 };
