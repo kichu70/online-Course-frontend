@@ -9,6 +9,7 @@
   width: 100%;
   z-index: -20;
 }
+.main-div{margin-top: 150px;}
 .home-sct1 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

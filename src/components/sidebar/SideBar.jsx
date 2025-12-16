@@ -45,7 +45,6 @@ const SideBar = ({ isOpen, onClose }) => {
           {/* Section 1 */}
           <div className="sb-sct1">
             <div className="sb-sct1-cnt1">
-              <h1>Side Bar</h1>
             </div>
             <div className="sb-sct1-cnt2">
               <img
@@ -108,9 +107,7 @@ const SideBar = ({ isOpen, onClose }) => {
         <>
           {/* Section 1 */}
           <div className="sb-sct1">
-            <div className="sb-sct1-cnt1">
-              <h1>Side Bar</h1>
-            </div>
+
             <div className="sb-sct1-cnt2">
               <img
                 alt="Profile"

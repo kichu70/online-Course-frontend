@@ -1,4 +1,6 @@
-.no-enrolled-course {
+.enrolled{
+  margin-top: 150px;
+}.no-enrolled-course {
   background: linear-gradient(
     rgb(255, 255, 255),
     rgba(230, 174, 174, 0.696),

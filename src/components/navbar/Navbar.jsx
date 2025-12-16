@@ -47,8 +47,8 @@ const Navbar = () => {
           <div className="nav-cnt3">
             {token ? (
               <>
-                {/* <button onClick={logout}>logout</button> */}
-                <button onClick={toggleSidebar}>≡</button>
+                <button onClick={logout}>logout</button>
+                <button className="mbl" onClick={toggleSidebar}>≡</button>
               </>
             ) : (
               <>
@@ -62,9 +62,6 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className="mbl">
-            <button>≡</button>
-          </div>
         </div>
       ) : // ------------------instructor nav------------------
 
@@ -82,8 +79,9 @@ const Navbar = () => {
             <div className="nav-cnt3">
               {token ? (
                 <>
+                <button onClick={()=>router.push("/instructor/add-course")}>add course</button>
                   {/* <button onClick={logout}>logout</button> */}
-                  <button onClick={toggleSidebar}>≡</button>
+                  <button className="mbl" onClick={toggleSidebar}>≡</button>
                 </>
               ) : (
                 <>
@@ -97,9 +95,6 @@ const Navbar = () => {
               )}
             </div>
 
-            <div className="mbl">
-              <button>≡</button>
-            </div>
           </div>
       ) : // ---------------admin nav---------------------------
 

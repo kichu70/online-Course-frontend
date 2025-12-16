@@ -16,9 +16,12 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 import { handlePayment } from "@/components/payment/paymentButton";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const [course, setCourse] = useState([]);
+  const router = useRouter();
+
 
   const {
     token,

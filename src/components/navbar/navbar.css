@@ -1,7 +1,11 @@
 .navbar {
   height: 110px;
   width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
   background: linear-gradient(rgb(232, 152, 152),rgba(255, 255, 255, 0.304));
+  background-color: rgb(240, 246, 252);
 }
 .navbar-cnt1 {
   display: flex;
@@ -75,10 +79,10 @@
 }
 .nav-cnt3{
   display: flex;
+  gap: 20px;
 }
-.mbl{
-  display: none;
-}
+/* .mbl{
+} */
 /* --------------------------responsive--------------------- */
 
 @media (max-width: 1401px) {

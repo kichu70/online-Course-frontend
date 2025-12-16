@@ -2,7 +2,6 @@
     background: linear-gradient(rgb(255, 255, 255),rgba(230, 174, 174, 0.696),rgb(248, 192, 192),rgb(252, 252, 252));
     width: 100%;
     height: 100%;
-    margin: 0;
     padding: 0;
     min-height: 85vh;
 }
@@ -23,7 +22,7 @@
     /* background-color: aqua; */
     display: grid;
     max-width: 1250px;
-    margin: auto;
+    margin:150px  auto;
     gap: 20;
     grid-template-columns: repeat(3,1fr);
 }

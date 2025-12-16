@@ -1,8 +1,8 @@
-.allCourse-sct1{
+/* .allCourse-sct1{
     background-color: yellow;
-}
+} */
 .allCourse-sct1-ctn1{
-    background-color: aqua;
+    /* background-color: aqua; */
     max-width: 1250px;
     margin: auto;
     display: grid;

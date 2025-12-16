@@ -1,4 +1,6 @@
-.inst-hom-sct1-cnt1 {
+.instructor-home{
+  margin-top: 150px;
+}.inst-hom-sct1-cnt1 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   align-items: center;
