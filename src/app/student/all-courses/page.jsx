@@ -16,29 +16,41 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 import { handlePayment } from "@/components/payment/paymentButton";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const page = () => {
   const [course, setCourse] = useState([]);
   const router = useRouter();
-
 
   const {
     token,
     onFreeEnroll,
     reusebleFunction,
     enrolledCourses,
-    setEnrolledCourses,
+    addToCart,
     user,
+    isInCart,
   } = useAuth();
 
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState();
 
-  const [loading, setLoading] = useState(true); //this is used to loading time show the loading pera
-  const [networkError, setNetworkError] = useState(false); //this is used to  show the network error pera
+  const [loading, setLoading] = useState(true);
+  const [networkError, setNetworkError] = useState(false);
 
-  // -------------fetch all course's-------------------------
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search") || "";
+
+  // SEARCH FILTER (SAFE)
+  const filteredCourses = search
+    ? course.filter((c) =>
+        `${c.title} ${c.category} ${c.description} ${c.instructor_name}`
+          .toLowerCase()
+          .includes(search.toLowerCase())
+      )
+    : course;
+
+  // -------- FETCH COURSES ----------
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -64,6 +76,7 @@ const page = () => {
   return (
     <div className="all-course">
       <Navbar />
+
       {loading ? (
         <div className="loading-course">
           <p>Loading courses...</p>
@@ -74,91 +87,101 @@ const page = () => {
         </div>
       ) : (
         <div className="all-crs-cnt1">
-          {course.map((course) => (
-            <Card sx={{ maxWidth: 445 }} key={course.id} className="card">
-              <CardMedia
-                className="card-media"
-                sx={{ height: 140 }}
-                image={`${API_BASE_URL}${course.thumbnail}`}
-                title="green iguana"
-              />
+          {filteredCourses.length === 0 ? (
+            <p style={{ textAlign: "center", width: "100%" }}>
+              No courses found
+            </p>
+          ) : (
+            filteredCourses.map((course) => (
+              <Card sx={{ maxWidth: 445 }} key={course.id} className="card">
+                <CardMedia
+                  className="card-media"
+                  sx={{ height: 140 }}
+                  image={`${API_BASE_URL}${course.thumbnail}`}
+                  title={course.title}
+                />
 
-              <CardContent>
-                <Typography
-                  className="title"
-                  gutterBottom
-                  variant="h5"
-                  component="div"
-                >
-                  {course.title}
-                </Typography>
-                <Typography gutterBottom variant="h5" component="div">
-                  Instructor:<span>{course?.instructor_name}</span>
-                </Typography>
-                <Typography
-                  gutterBottom
-                  variant="h5"
-                  component="div"
-                  className="price"
-                >
-                {enrolledCourses.includes(course.id) ? (
-                  <h4 className="purchased">₹ {course.price} </h4>
-                ) : course.price > 0 ? (
-                  course.price
-                ) : (
-                  "Free"
-                )}
-                </Typography>
-                <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                  {course.category}
-                </Typography>
-                <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                  {course.description}
-                </Typography>
-              </CardContent>
-              <CardActions
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              >
-                {token &&
-                user?.role === "student" &&
-                enrolledCourses?.includes(course.id) ? (
+                <CardContent>
+                  <Typography gutterBottom variant="h5">
+                    {course.title}
+                  </Typography>
+
+                  <Typography gutterBottom variant="h6">
+                    Instructor: <span>{course.instructor_name}</span>
+                  </Typography>
+
+                  <Typography gutterBottom variant="h6">
+                    {enrolledCourses.includes(course.id)
+                      ? `₹ ${course.price}`
+                      : course.price > 0
+                      ? `₹ ${course.price}`
+                      : "Free"}
+                  </Typography>
+
+                  <Typography variant="body2" color="text.secondary">
+                    {course.category}
+                  </Typography>
+
+                  <Typography variant="body2" color="text.secondary">
+                    {course.description}
+                  </Typography>
+                </CardContent>
+
+                <CardActions onClick={(e) => e.stopPropagation()}>
+                  {token &&
+                  user?.role === "student" &&
+                  enrolledCourses?.includes(course.id) ? (
+                    <Button
+                      size="small"
+                      onClick={() =>
+                        router.push(`/student/all-lectures/${course.id}`)
+                      }
+                    >
+                      Play
+                    </Button>
+                  ) : course.price > 0 ? (
+                    <Button
+                      size="small"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        reusebleFunction(() =>
+                          handlePayment(course.id, token)
+                        );
+                      }}
+                    >
+                      Buy Now
+                    </Button>
+                  ) : (
+                    <Button
+                      size="small"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        reusebleFunction(() =>
+                          onFreeEnroll(course.id)
+                        );
+                      }}
+                    >
+                      Enroll
+                    </Button>
+                  )}
+
                   <Button
-                    size="small"
-                    onClick={() =>
-                      router.push(`/student/all-lectures/${course.id}`)
-                    }
-                  >
-                    play
-                  </Button>
-                ) : course.price > 0 ? (
-                  <Button
+                  disabled={isInCart(course.id)}
                     size="small"
                     onClick={(e) => {
                       e.stopPropagation();
-                      reusebleFunction(() => handlePayment(course.id, token));
+                      reusebleFunction(() => addToCart(course));
                     }}
                   >
-                    Buy Now
+                    Add to cart
                   </Button>
-                ) : (
-                  <Button
-                    size="small"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      reusebleFunction(() => onFreeEnroll(course?.id));
-                    }}
-                  >
-                    enroll
-                  </Button>
-                )}
-                <Button size="small">add to cart</Button>
-              </CardActions>
-            </Card>
-          ))}
+                </CardActions>
+              </Card>
+            ))
+          )}
         </div>
       )}
+
       <div className="pagination0">
         <button
           className="pages0"

@@ -202,6 +202,15 @@ export const AuthProvider = ({ children, cookieData }) => {
     return false; // allow
   };
 
+
+
+
+    // -------------------------helper function to add once----------
+  const isInCart = (courseId) => {
+    return cartItems?.some((item) => item.id === courseId);
+  };
+
+
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} theme="colored" />
@@ -222,6 +231,7 @@ export const AuthProvider = ({ children, cookieData }) => {
           removeFromCart,
           setEnrolledCourses,
           blockLoginForStudent,
+          isInCart,
         }}
       >
         {children}

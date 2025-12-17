@@ -31,8 +31,9 @@ const Page = () => {
     onFreeEnroll,
     reusebleFunction,
     enrolledCourses,
-    setEnrolledCourses,
+    addToCart,
     user,
+    isInCart,
   } = useAuth();
 
   // -------------fetch the course's-------------------------
@@ -108,13 +109,13 @@ const Page = () => {
                   component="div"
                   className="price"
                 >
-                {enrolledCourses.includes(course.id) ? (
-                  <h4 className="purchased">₹ {course.price} </h4>
-                ) : course.price > 0 ? (
-                  course.price
-                ) : (
-                  "Free"
-                )}
+                  {enrolledCourses.includes(course.id) ? (
+                    <h4 className="purchased">₹ {course.price} </h4>
+                  ) : course.price > 0 ? (
+                    course.price
+                  ) : (
+                    "Free"
+                  )}
                 </Typography>
                 <Typography variant="body2" sx={{ color: "text.secondary" }}>
                   {course.category}
@@ -161,7 +162,16 @@ const Page = () => {
                     enroll
                   </Button>
                 )}
-                <Button size="small">add to cart</Button>
+                <Button
+                  size="small"
+                  disabled={isInCart(course.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    reusebleFunction(() => addToCart(course));
+                  }}
+                >
+                  add to cart
+                </Button>
               </CardActions>
             </Card>
           ))}

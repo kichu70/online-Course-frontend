@@ -10,8 +10,8 @@ const Navbar = () => {
   const router = useRouter();
   const { logout, token, user } = useAuth();
   const [category, setCategory] = useState("");
+  const [search, setSearch] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  
 
   const handleCategoryChange = (e) => {
     const selectedCategory = e.target.value;
@@ -34,16 +34,32 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="nav-cnt2">
-            <input className="search" type="search" placeholder="Search..." />
-            <button onClick={()=>router.push("/student/all-courses")}>all course</button>
+            <input
+              className="search"  
+              type="search"
+              placeholder="Search courses..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  router.push(`/student/all-courses?search=${search}`);
+                }
+              }}
+            />
+            <button onClick={() => router.push("/student/all-courses")}>
+              all course
+            </button>
           </div>
           <div className="nav-cnt3">
             {token ? (
               <>
-              
                 {/* <button onClick={logout}>logout</button> */}
-                <button onClick={()=>router.push("/student/cart")}>cart</button>
-                <button className="" onClick={toggleSidebar}>menu</button>
+                <button onClick={() => router.push("/student/cart")}>
+                  cart
+                </button>
+                <button className="" onClick={toggleSidebar}>
+                  menu
+                </button>
               </>
             ) : (
               <>
@@ -56,41 +72,42 @@ const Navbar = () => {
               </>
             )}
           </div>
-
         </div>
       ) : // ------------------instructor nav------------------
 
       user?.role === "instructor" ? (
-          <div className="navbar-cnt1">
-            <div className="nav-cnt1">
-              <Link href={"/instructor"}>
-                <button>home</button>
-              </Link>
-            </div>
-            <div className="nav-cnt2">
-              <input className="search" type="search" placeholder="Search..." />
-
-            </div>
-            <div className="nav-cnt3">
-              {token ? (
-                <>
-                <button onClick={()=>router.push("/instructor/add-course")}>add course</button>
-                  <button onClick={logout}>logout</button>
-                  <button className="mbl" onClick={toggleSidebar}>≡</button>
-                </>
-              ) : (
-                <>
-                  <Link href={"/login"}>
-                    <button>login</button>
-                  </Link>
-                  <Link href={"/register"}>
-                    <button>sign in</button>
-                  </Link>
-                </>
-              )}
-            </div>
-
+        <div className="navbar-cnt1">
+          <div className="nav-cnt1">
+            <Link href={"/instructor"}>
+              <button>home</button>
+            </Link>
           </div>
+          <div className="nav-cnt2">
+            <input className="search" type="search" placeholder="Search..." />
+          </div>
+          <div className="nav-cnt3">
+            {token ? (
+              <>
+                <button onClick={() => router.push("/instructor/add-course")}>
+                  add course
+                </button>
+                <button onClick={logout}>logout</button>
+                <button className="mbl" onClick={toggleSidebar}>
+                  ≡
+                </button>
+              </>
+            ) : (
+              <>
+                <Link href={"/login"}>
+                  <button>login</button>
+                </Link>
+                <Link href={"/register"}>
+                  <button>sign in</button>
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
       ) : // ---------------admin nav---------------------------
 
       user?.role === "admin" ? (

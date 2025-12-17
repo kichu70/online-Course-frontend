@@ -37,6 +37,7 @@ export default function Home() {
     onFreeEnroll,
     enrolledCourses,
     setEnrolledCourses,
+    isInCart
   } = useAuth();
 
   const router = useRouter();
@@ -112,6 +113,9 @@ export default function Home() {
 
     callback();
   };
+
+
+
   // *******************************************************
   return (
     <div>
@@ -425,6 +429,16 @@ export default function Home() {
                           )}
                           <Button
                             size="small"
+                            disabled={isInCart(course.id)}
+                            sx={{
+                              textDecoration: isInCart(course.id)
+                                ? "line-through"
+                                : "none",
+                              opacity: isInCart(course.id) ? 0.5 : 1,
+                              cursor: isInCart(course.id)
+                                ? "not-allowed"
+                                : "pointer",
+                            }}
                             onClick={(e) => {
                               e.stopPropagation();
                               reusebleFunction(() => addToCart(course));
@@ -597,6 +611,7 @@ export default function Home() {
                           )}
                           <Button
                             size="small"
+                            disabled={isInCart(course.id)}
                             onClick={(e) => {
                               e.stopPropagation();
                               reusebleFunction(() => addToCart(course));

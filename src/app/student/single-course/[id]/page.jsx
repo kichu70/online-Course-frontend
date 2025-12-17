@@ -27,7 +27,8 @@ const page = () => {
     onFreeEnroll,
     reusebleFunction,
     enrolledCourses,
-    setEnrolledCourses,
+    isInCart,
+    addToCart,
   } = useAuth();
 
   const router = useRouter();
@@ -146,7 +147,16 @@ const page = () => {
                   enroll
                 </Button>
               )}
-              <Button size="small">add to cart</Button>
+              <Button
+                size="small"
+                disabled={isInCart(course.id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  reusebleFunction(() => addToCart(course));
+                }}
+              >
+                add to cart
+              </Button>
             </CardActions>
           </div>
         </div>
