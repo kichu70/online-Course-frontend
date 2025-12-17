@@ -66,9 +66,7 @@ const SideBar = ({ isOpen, onClose }) => {
           <div className="sb-sct2">
             <div className="sb-sct2-cnt1">
               <h1>courses</h1>
-              <Link href={"/student/enrolled-courses"}>
-                <button>enroled course's</button>
-              </Link>
+                <button onClick={()=>router.push("/student/enrolled-courses")}>enroled course's</button>
               {token && (
                 <select value={category} onChange={handleCategoryChange}>
                   <option value="">Course's category</option>
@@ -78,6 +76,7 @@ const SideBar = ({ isOpen, onClose }) => {
                   <option value="B-Com">B Com</option>
                 </select>
               )}
+              <button>completed coursers</button>
             </div>
             <div className="sb-sct2-cnt2"></div>
             {/* <div className="sb-sct2-cnt3">Settings</div> */}
@@ -94,7 +93,7 @@ const SideBar = ({ isOpen, onClose }) => {
                     <button>login</button>
                   </Link>
                   <Link href={"/register"}>
-                    <button>singn in</button>
+                    <button>sign in</button>
                   </Link>
                 </>
               )}
@@ -148,7 +147,7 @@ const SideBar = ({ isOpen, onClose }) => {
                     <button>login</button>
                   </Link>
                   <Link href={"/register"}>
-                    <button>singn in</button>
+                    <button>sign in</button>
                   </Link>
                 </>
               )}

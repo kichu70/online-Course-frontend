@@ -56,7 +56,7 @@ const Page = () => {
   useEffect(() => {
     if (!loading && lectures.length === 0) {
       const timer = setTimeout(() => {
-        router.push("/");
+        router.back();
       }, 2000);
 
       return () => clearTimeout(timer);

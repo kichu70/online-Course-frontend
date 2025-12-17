@@ -25,3 +25,19 @@
 .single-course-sct1-cnt1 .cnt{
     padding: 50px 0 ;
 }
+.lecture-btns{
+    width: 100%;
+    /* background-color: aqua; */
+    margin: 20px 0 0 ;
+    display: flex;
+    gap: 20px;
+}
+.all-lecture{
+    width: 100%;
+    background-color: rgb(58, 21, 29) !important;
+}
+.add-lecutre{
+    width: 100%;
+    background-color: rgb(50, 81, 55) !important;
+
+}

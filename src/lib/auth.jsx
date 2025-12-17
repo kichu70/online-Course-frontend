@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { setCookie } from "./cookies/setCookies";
 import { clearCookie } from "./cookies/clearCookies";
 import { getCookie } from "./cookies/getCookies";
-import {AUTH_API,STUDENT_API} from "@/lib/constants/apiUrl"
+import { AUTH_API, STUDENT_API } from "@/lib/constants/apiUrl";
 
 const AuthContext = createContext();
 
@@ -18,32 +18,58 @@ export const AuthProvider = ({ children, cookieData }) => {
   const [user, setUser] = useState(cookieData?.user || null);
   const [role, setRole] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
 
-   const [enrolledCourses, setEnrolledCourses] = useState([]);
-
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
 
   useEffect(() => {}, [token]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
+      const storedCart = localStorage.getItem("cartItems");
+
       if (cookieData) {
         setToken(cookieData.token);
         setUser(cookieData.user);
       }
+      if (storedCart) setCartItems(JSON.parse(storedCart));
     }
-  }, []);
+  }, [token]);
+
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    } else {
+      localStorage.removeItem("cartItems");
+    }
+  }, [cartItems]);
+
+  const addToCart = (course) => {
+    const exists = cartItems.find((item) => item.id === course.id);
+    if (exists) {
+      toast.info("you already added to cart");
+      return;
+    } else {
+      setCartItems((prev) => [...prev, course]);
+      toast.success("course added to cart");
+    }
+  };
+
+  // --------remove from cart -------------
+
+  const removeFromCart = (courseId) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== courseId));
+    toast.info("course removed from cart");
+  };
 
   // ---------------login----------------
 
   const login = async (email, password) => {
     try {
-      const res = await axios.post(
-        AUTH_API.LOGIN,
-        {
-          email,
-          password,
-        }
-      );
+      const res = await axios.post(AUTH_API.LOGIN, {
+        email,
+        password,
+      });
       console.log("Full backend response:", res.data);
       const token1 = res.data.AccessToken;
       const userData = res.data.userData;
@@ -51,9 +77,9 @@ export const AuthProvider = ({ children, cookieData }) => {
       setToken(token1);
       setUser(userData);
       // const role = userData.role;
-      console.log(role,userId)
-      setRole(userData.role)
-      setUserId(userData.id)
+      console.log(role, userId);
+      setRole(userData.role);
+      setUserId(userData.id);
       setCookie(token1, userData);
       if (token1) {
         if (userData.role === "admin") {
@@ -63,15 +89,14 @@ export const AuthProvider = ({ children, cookieData }) => {
           toast.success("login student");
           router.push("/");
           console.log("ok**");
-        } else if(userData.role === "instructor") {
-            toast.success("login Instructor");
-            router.push("/");
-            console.log("ok555**");
-          }
+        } else if (userData.role === "instructor") {
+          toast.success("login Instructor");
+          router.push("/");
+          console.log("ok555**");
         }
-        else{
-          return;
-        }
+      } else {
+        return;
+      }
     } catch (err) {
       console.log(err, "error is in the login fr", { email, password });
       toast.error("invalid email or password");
@@ -84,9 +109,11 @@ export const AuthProvider = ({ children, cookieData }) => {
     setToken(null);
     setUser(null);
     setRole(null);
-    setUserId(null)
+    setUserId(null);
     setEnrolledCourses([]);
     clearCookie();
+    setCartItems([]);
+
     toast.success("logout successfully");
   };
 
@@ -120,45 +147,37 @@ export const AuthProvider = ({ children, cookieData }) => {
       toast.info("Instructor can't use this functions");
       return;
     }
-    
+
     callback();
   };
 
-
-
-
-
   // ------free enroll add -----to avoid  reapet ----------------
 
-
-  
-const onFreeEnroll = async (courseId) => {
-  try {
-    const res = await axios.post(
-      `${STUDENT_API.FREE_ENROLL}?courseId=${courseId}`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    console.log(res.data);
-    toast.success(res.data.message);
-     setEnrolledCourses((prev) => [...prev, courseId]);
-  } catch (err) {
-    console.log(err, "Error in free enroll function");
-    toast.error("Failed to enroll in course");
-  }
-};
-
-
- // Fetch enrolled courses whenever token changes
-  useEffect(() => {
-    if(!token){
-    setEnrolledCourses([]);
+  const onFreeEnroll = async (courseId) => {
+    try {
+      const res = await axios.post(
+        `${STUDENT_API.FREE_ENROLL}?courseId=${courseId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(res.data);
+      toast.success(res.data.message);
+      setEnrolledCourses((prev) => [...prev, courseId]);
+    } catch (err) {
+      console.log(err, "Error in free enroll function");
+      toast.error("Failed to enroll in course");
     }
-    else{
+  };
+
+  // Fetch enrolled courses whenever token changes
+  useEffect(() => {
+    if (!token) {
+      setEnrolledCourses([]);
+    } else {
       const fetchEnrolled = async () => {
         if (!token) return;
         try {
@@ -174,15 +193,14 @@ const onFreeEnroll = async (courseId) => {
       };
       fetchEnrolled();
     }
-  }, [token]) ;
-// ---------------if logined then logout out to login as user------------
-const blockLoginForStudent = () => {
-  if (token && user) {
-    return true; // block navigation
-  }
-  return false; // allow
-};
-
+  }, [token]);
+  // ---------------if logined then logout out to login as user------------
+  const blockLoginForStudent = () => {
+    if (token && user) {
+      return true; // block navigation
+    }
+    return false; // allow
+  };
 
   return (
     <>
@@ -199,6 +217,9 @@ const blockLoginForStudent = () => {
           reusebleFunction,
           onFreeEnroll,
           enrolledCourses,
+          cartItems,
+          addToCart,
+          removeFromCart,
           setEnrolledCourses,
           blockLoginForStudent,
         }}

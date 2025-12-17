@@ -13,15 +13,14 @@ import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
-import { toast } from "react-toastify"; 
+import { toast } from "react-toastify";
 
 import Confirm from "@/components/confirmDelete/Confirm";
 import EditCourse from "@/components/edit/EditCourse";
 
 const page = () => {
   const [loading, setLoading] = useState(true); //this is used to loading time show the loading pera
-  
-  
+
   const { id } = useParams();
   const {
     token,
@@ -31,8 +30,7 @@ const page = () => {
     setEnrolledCourses,
   } = useAuth();
   const router = useRouter();
-  
-  
+
   const [course, setCourse] = useState([]);
   const [deleteId, setDeleteId] = useState(null);
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -77,21 +75,21 @@ const page = () => {
     setOpenConfirm(true);
   };
 
-  const onhandledelete =async (id) => {
+  const onhandledelete = async (id) => {
     if (!deleteId) return;
     try {
-        const res = await axios.put(
-          `${INSTRUCTOR_API.DELETE_COURSE}?courseId=${deleteId}`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log(res.data, "deleted");
-        toast.success("book have been deleted");
-        router.push("/instructor");
+      const res = await axios.put(
+        `${INSTRUCTOR_API.DELETE_COURSE}?courseId=${deleteId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(res.data, "deleted");
+      toast.success("course have been deleted");
+      router.push("/instructor");
     } catch (err) {
       console.log(err, "error is in the delete function");
     } finally {
@@ -100,12 +98,9 @@ const page = () => {
     }
   };
 
+  // -----------update course------------------------
 
-
-
-    // -----------update course------------------------
-
-  const handleUpdate = (id,course) => {
+  const handleUpdate = (id, course) => {
     setEditId(id);
     setSelectCourse(course);
     setopenEdit(true);
@@ -116,17 +111,41 @@ const page = () => {
       <Navbar />
       <div className="single-course">
         <div className="single-course-sct1-cnt1">
-            <Button  className="btn-go-back"onClick={()=>{router.back()}}>🔙</Button>
-
-          <div
-            key={course.id}
-            sx={{ maxWidth: 445 }}
-            className="card"
+          <Button
+            className="btn-go-back"
+            onClick={() => {
+              router.back();
+            }}
           >
-            <img src={`${API_BASE_URL}${course.thumbnail}`} alt=""  />
-            <Button variant="contained" 
-            onClick={() => router.push(`/instructor/all-lectures/${course.id}`)}
-            >view all lecture</Button>
+            ⇐ 
+          </Button>
+
+          <div key={course.id} sx={{ maxWidth: 445 }} className="card">
+            <img src={`${API_BASE_URL}${course.thumbnail}`} alt="" />
+          {course?.status === "approved" ? (
+           <div className="lecture-btns">
+
+            <Button
+              variant="contained"
+              className="all-lecture"
+              onClick={() =>
+                router.push(`/instructor/all-lectures/${course.id}`)
+              }
+            >
+              view all lecture
+            </Button>
+            <Button
+              variant="contained"
+              className="add-lecutre"
+              onClick={() =>
+                router.push(`/instructor/add-lecture/${course.id}`)
+              }
+            >
+              add lecture
+            </Button>
+           </div>):(
+            <p>cant add lecture without admin approvel</p>
+           )}
             <br />
             &nbsp;
             <Rating
@@ -153,7 +172,7 @@ const page = () => {
                 total lectures {course.total_lectures}
               </Typography>
               <Typography gutterBottom variant="h5" component="div">
-                Instructor:<span>{course?.instructor_name}</span>
+                Instructor:<span>{course?.instructor?.name}</span>
               </Typography>
               <Typography
                 gutterBottom
@@ -167,19 +186,28 @@ const page = () => {
                 {course.category}
               </Typography>
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                status:{course.status}
+              </Typography>
+              <Typography variant="body2" sx={{ color: "text.secondary" }}>
                 {course.description}
               </Typography>
             </div>
-            <CardActions onClick={(e)=>{e.stopPropagation()}}>
+            {/* {course?.status === "approved" && ( */}
+            <CardActions
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
               <Button
-               className="editbtn"
-                  size="small"
-                  onClick={() => handleUpdate(course.id, course)}
-              >edit</Button>
+                className="editbtn"
+                size="small"
+                onClick={() => handleUpdate(course.id, course)}
+              >
+                edit
+              </Button>
               <Button size="small" onClick={() => handleDeleteClick(course.id)}>
                 delete
               </Button>
-              
             </CardActions>
           </div>
         </div>
@@ -194,7 +222,7 @@ const page = () => {
           setDeleteId(null);
         }}
       />
-            {openEdit && (
+      {openEdit && (
         <EditCourse
           open={openEdit}
           course={selectCourse}

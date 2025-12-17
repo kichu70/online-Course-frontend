@@ -119,15 +119,13 @@ const page = () => {
             >
               {enrolledCourses.includes(course.id) ? (
                 <Button
-                              size="small"
-                              onClick={() =>
-                                router.push(
-                                  `/student/all-lectures/${course.id}`
-                                )
-                              }
-                            >
-                              play
-                            </Button>
+                  size="small"
+                  onClick={() =>
+                    router.push(`/student/all-lectures/${course.id}`)
+                  }
+                >
+                  play
+                </Button>
               ) : course.price > 0 ? (
                 <Button
                   size="small"

@@ -2,39 +2,34 @@
 
 import { Button, TextField } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import "./EditCourse.css";
+import "./EditLecture.css";
 import axios from "axios";
 import { INSTRUCTOR_API, API_BASE_URL } from "@/lib/constants/apiUrl";
 
 import { useAuth } from "@/lib/auth";
 
 import { toast } from "react-toastify";
-import { title } from "process";
 
-const EditCourse = ({ open, course, id, onClose }) => {
+const EditLecture = ({ open, lecture, id, onClose }) => {
   const { token } = useAuth();
 
   const notify3 = () => toast.dark("dataUpdated");
   const editboxRef = useRef();
-  const [courseName, setCourseName] = useState("");
-  const [courseDescription, setCourseDescription] = useState("");
-  const [coursePrice, setCoursePrice] = useState("");
+  const [lectureName, setLectureName] = useState("");
 
   useEffect(() => {
-    if (course) {
-      setCourseName(course.title || "");
-      setCourseDescription(course.description || "");
-      setCoursePrice(course.price || "");
+    if (lecture) {
+      setLectureName(lecture.title || "");
+
     }
-  }, [course]);
-  const UpdateCourse = async () => {
+  }, [lecture]);
+  const UpdateLecture = async () => {
     try {
       const res = await axios.put(
-        `${INSTRUCTOR_API.UPDATE_COURSE}?id=${id}`,
+        `${INSTRUCTOR_API.UPDATE_LECTURE}?courseId=${lecture.course}&lectureId=${id}`,
         {
-          title: courseName,
-          description: courseDescription,
-          price: coursePrice,
+          title: lectureName,
+
         },
         {
           headers: {
@@ -44,8 +39,7 @@ const EditCourse = ({ open, course, id, onClose }) => {
       );
       console.log(res, id);
       notify3();
-      const updated = res.data.data;
-      onClose({ id: updated._id, ...updated });
+      onClose(res.data.data );
     } catch (err) {
       const errors = err.response?.data?.msg;
       if (errors) {
@@ -70,43 +64,26 @@ const EditCourse = ({ open, course, id, onClose }) => {
 
   return (
     <div className="main-edit" ref={editboxRef}>
-      {/* <Button variant='contained' className='closebtn'onClick={onClose}>X</Button> */}
       <div className="edit">
-        <h1>Edit Product</h1>
+        <h1>Edit lecture</h1>
         <div className="edit-colums">
           <TextField
-            onChange={(e) => setCourseName(e.target.value)}
-            value={courseName}
+            onChange={(e) => setLectureName(e.target.value)}
+            value={lectureName}
             className="textEditField"
-            label="course name"
+            label="lecture name"
             variant="filled"
             focused
           />
-          <TextField
-            onChange={(e) => setCourseDescription(e.target.value)}
-            value={courseDescription}
-            className="textEditField"
-            label="Description"
-            variant="filled"
-            focused
-          />
-          <TextField
-            onChange={(e) => setCoursePrice(e.target.value)}
-            value={coursePrice}
-            className="textEditField"
-            label="Price"
-            variant="filled"
-            type="number"
-            focused
-          />
+
           <Button
             className="updatebtn"
             onClick={() => {
-              UpdateCourse();
+              UpdateLecture();
             }}
             variant="contained"
           >
-            update course
+            update lecture
           </Button>
         </div>
       </div>
@@ -114,4 +91,4 @@ const EditCourse = ({ open, course, id, onClose }) => {
   );
 };
 
-export default EditCourse;
+export default EditLecture;

@@ -32,6 +32,7 @@ const Page = () => {
     reusebleFunction,
     enrolledCourses,
     setEnrolledCourses,
+    user,
   } = useAuth();
 
   // -------------fetch the course's-------------------------
@@ -46,7 +47,6 @@ const Page = () => {
           ...rest,
         }));
         setCourse(idReplace);
-        console.log(idReplace, "courses");
       } catch (err) {
         console.log(err, "error fetching courses");
       } finally {
@@ -108,7 +108,13 @@ const Page = () => {
                   component="div"
                   className="price"
                 >
-                  ₹ {course.price > 0 ? course.price : "Free"}
+                {enrolledCourses.includes(course.id) ? (
+                  <h4 className="purchased">₹ {course.price} </h4>
+                ) : course.price > 0 ? (
+                  course.price
+                ) : (
+                  "Free"
+                )}
                 </Typography>
                 <Typography variant="body2" sx={{ color: "text.secondary" }}>
                   {course.category}
@@ -117,8 +123,23 @@ const Page = () => {
                   {course.description}
                 </Typography>
               </CardContent>
-              <CardActions>
-                {course.price > 0 ? (
+              <CardActions
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                {token &&
+                user?.role === "student" &&
+                enrolledCourses?.includes(course.id) ? (
+                  <Button
+                    size="small"
+                    onClick={() =>
+                      router.push(`/student/all-lectures/${course.id}`)
+                    }
+                  >
+                    play
+                  </Button>
+                ) : course.price > 0 ? (
                   <Button
                     size="small"
                     onClick={(e) => {
@@ -126,10 +147,19 @@ const Page = () => {
                       reusebleFunction(() => handlePayment(course.id, token));
                     }}
                   >
-                    buy now
+                    Buy Now
                   </Button>
                 ) : (
-                  <Button size="small">enroll</Button>
+                  <Button
+                    size="small"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      console.log("Clicked Course =", course?.id);
+                      reusebleFunction(() => onFreeEnroll(course?.id));
+                    }}
+                  >
+                    enroll
+                  </Button>
                 )}
                 <Button size="small">add to cart</Button>
               </CardActions>

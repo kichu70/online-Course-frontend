@@ -11,6 +11,7 @@ const Navbar = () => {
   const { logout, token, user } = useAuth();
   const [category, setCategory] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  
 
   const handleCategoryChange = (e) => {
     const selectedCategory = e.target.value;
@@ -34,21 +35,15 @@ const Navbar = () => {
           </div>
           <div className="nav-cnt2">
             <input className="search" type="search" placeholder="Search..." />
-            {token && (
-              <select value={category} onChange={handleCategoryChange}>
-                <option value="">Course's</option>
-                <option value="BBA">BBA</option>
-                <option value="BA">BA</option>
-                <option value="BCA">BCA</option>
-                <option value="B-Com">B Com</option>
-              </select>
-            )}
+            <button onClick={()=>router.push("/student/all-courses")}>all course</button>
           </div>
           <div className="nav-cnt3">
             {token ? (
               <>
-                <button onClick={logout}>logout</button>
-                <button className="mbl" onClick={toggleSidebar}>≡</button>
+              
+                {/* <button onClick={logout}>logout</button> */}
+                <button onClick={()=>router.push("/student/cart")}>cart</button>
+                <button className="" onClick={toggleSidebar}>menu</button>
               </>
             ) : (
               <>
@@ -56,7 +51,7 @@ const Navbar = () => {
                   <button>login</button>
                 </Link>
                 <Link href={"/register"}>
-                  <button>singn in</button>
+                  <button>sign in</button>
                 </Link>
               </>
             )}
@@ -80,7 +75,7 @@ const Navbar = () => {
               {token ? (
                 <>
                 <button onClick={()=>router.push("/instructor/add-course")}>add course</button>
-                  {/* <button onClick={logout}>logout</button> */}
+                  <button onClick={logout}>logout</button>
                   <button className="mbl" onClick={toggleSidebar}>≡</button>
                 </>
               ) : (
@@ -89,7 +84,7 @@ const Navbar = () => {
                     <button>login</button>
                   </Link>
                   <Link href={"/register"}>
-                    <button>singn in</button>
+                    <button>sign in</button>
                   </Link>
                 </>
               )}

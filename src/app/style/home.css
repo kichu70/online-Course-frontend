@@ -142,12 +142,12 @@
   );
 }
 .sct2-bg {
-  background: linear-gradient(
+  /* background: linear-gradient(
     rgba(255, 255, 255, 0),
     rgba(177, 238, 171, 0.333),
     rgba(203, 180, 217, 0.634),
     rgba(231, 231, 231, 0)
-  );
+  ); */
 }
 .sct2-cnt2 h1 {
   text-align: center;

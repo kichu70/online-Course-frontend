@@ -1,24 +1,36 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
-
+import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+
+import "./singleLecture.css";
+import { INSTRUCTOR_API, API_BASE_URL } from "@/lib/constants/apiUrl";
 
 import Navbar from "@/components/navbar/Navbar";
+import EditLecture from "@/components/edit/EditLecture";
+import Confirm from "@/components/confirmDelete/Confirm";
+import { toast } from "react-toastify";
 
-import { STUDENT_API, API_BASE_URL } from "@/lib/constants/apiUrl";
-import Typography from "@mui/material/Typography";
-import "./singleLecture.css";
-import Button from "@mui/material/Button";
 const page = () => {
   const params = useParams();
   const { token, role } = useAuth();
+
   const [lectureData, setLectureData] = useState([]);
-  const [completedSent, setCompletedSent] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+  const [openConfirm, setOpenConfirm] = useState(false);
+
+  const [editId, setEditId] = useState(null);
+  const [selectLecture, setSelectLecture] = useState(null);
+  const [openEdit, setopenEdit] = useState(false);
 
   const lectureId = params?.id;
+  const router = useRouter();
+  
 
   // -----------fetch lecture data -----------------
   useEffect(() => {
@@ -33,13 +45,13 @@ const page = () => {
           const fetchdata = async () => {
             try {
               const res = await axios.get(
-                `${STUDENT_API.SINGLE_LECTURE}?lectureId=${lectureId}`,
+                `${INSTRUCTOR_API.SINGLE_LECTURE}?lectureId=${lectureId}`,
                 {
                   headers: { Authorization: `Bearer ${token}` },
                 }
               );
               const result = res.data.data;
-              // console.log(result);
+              console.log(result);
 
               setLectureData(result);
             } catch (err) {
@@ -54,48 +66,43 @@ const page = () => {
     }
   }, [token, lectureId]);
 
-  // ----------------const completede--------------
+  // -----------update lecture------------------------
 
-  const completWatching = async () => {
+  const handleUpdate = (id, lecture) => {
+    setEditId(id);
+    setSelectLecture(lecture);
+    setopenEdit(true);
+  };
+
+  // ------------delete lecture --------------------
+  const handleDeleteClick = (id) => {
+    setDeleteId(id);
+    setOpenConfirm(true);
+  };
+
+  const onhandledelete = async () => {
+    if (!deleteId) return;
     try {
-      if (!token) {
-        return console.log("no token found");
-      } else {
-        const res = await axios.post(
-          `${STUDENT_API.COMPLETED_LECTURE}`,
-          {
-            courseId: lectureData.course,
-            lectureId: lectureData._id,
+      const res = await axios.put(
+        `${INSTRUCTOR_API.DELETE_LECTURE}?lectureId=${deleteId}&courseId=${lectureData.course}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        // console.log(res.data)
-      }
+        }
+      );
+      console.log(res.data, "deleted");
+      toast.success("lecture have been deleted");
+      router.back();
     } catch (err) {
-      console.log(err, "error is in the viedo completed !!");
+      console.log(err, "error is in the delete function");
+    } finally {
+      setOpenConfirm(false);
+      setDeleteId(null);
     }
   };
 
-  // only completed after the watch atlist 80 %-----------
-
-  const handleProgress = (e) => {
-    const video = e.target;
-
-    const watched = video.currentTime;
-    const total = video.duration;
-
-    if (!total) return;
-
-    const percentage = (watched / total) * 100;
-
-    // When watched > 80% and API not sent yet
-    if (percentage >= 80 && !completedSent) {
-      completWatching();
-      setCompletedSent(true);
-    }
-  };
   return (
     <div>
       <Navbar />
@@ -107,7 +114,6 @@ const page = () => {
                 controls
                 src={`${API_BASE_URL}${lectureData.video_url}`}
                 style={{ objectFit: "cover" }}
-                onTimeUpdate={(e) => handleProgress(e)}
                 onEnded={() => {
                   console.log("Video watched completely");
                 }}
@@ -123,10 +129,39 @@ const page = () => {
               </Typography>
             </div>
           </div>
-          <Button>edit</Button>
-          <Button>delete</Button>
+          <Button onClick={() => handleUpdate(lectureData._id, lectureData)}>
+            edit
+          </Button>
+          <Button
+            size="small"
+            onClick={() => handleDeleteClick(lectureData._id)}
+          >
+            delete
+          </Button>
         </div>
       </div>
+      <Confirm
+        open={openConfirm}
+        onConfirm={onhandledelete}
+        onCancel={() => {
+          setOpenConfirm(false);
+          toast.dark("course not deleted");
+          setDeleteId(null);
+        }}
+      />
+      {openEdit && (
+        <EditLecture
+          open={openEdit}
+          lecture={selectLecture}
+          id={editId}
+          onClose={(updateLecture) => {
+            setopenEdit(false);
+            if (updateLecture) {
+              setLectureData(updateLecture);
+            }
+          }}
+        />
+      )}
     </div>
   );
 };

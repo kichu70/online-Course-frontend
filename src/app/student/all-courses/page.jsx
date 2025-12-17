@@ -50,7 +50,6 @@ const page = () => {
           ...rest,
         }));
         setCourse(idReplace);
-        console.log(idReplace, "courses");
         setTotalPage(res.data.totalPage);
       } catch (err) {
         setNetworkError(true);
@@ -62,7 +61,6 @@ const page = () => {
     fetchData();
   }, [page]);
 
-  console.log(enrolledCourses,"++++++++++++++++")
   return (
     <div className="all-course">
       <Navbar />
@@ -103,7 +101,13 @@ const page = () => {
                   component="div"
                   className="price"
                 >
-                  ₹ {course.price > 0 ? course.price : "Free"}
+                {enrolledCourses.includes(course.id) ? (
+                  <h4 className="purchased">₹ {course.price} </h4>
+                ) : course.price > 0 ? (
+                  course.price
+                ) : (
+                  "Free"
+                )}
                 </Typography>
                 <Typography variant="body2" sx={{ color: "text.secondary" }}>
                   {course.category}
@@ -143,7 +147,6 @@ const page = () => {
                     size="small"
                     onClick={(e) => {
                       e.stopPropagation();
-                      console.log("Clicked Course =", course?.id);
                       reusebleFunction(() => onFreeEnroll(course?.id));
                     }}
                   >

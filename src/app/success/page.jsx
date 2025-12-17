@@ -44,7 +44,7 @@ const Success = () => {
       toast.success("Payment Successful 🎉");
 
       setTimeout(() => {
-        router.push("/");
+        router.back();
       }, 1500);
     } catch (err) {
       console.log(err, "Error in paid enrollment");

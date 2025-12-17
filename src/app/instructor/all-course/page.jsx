@@ -117,8 +117,16 @@ const page = () => {
                 >
                   total lectures : {course.total_lectures}
                 </Typography>
+                <Typography
+                  gutterBottom
+                  variant="h6"
+                  className=""
+                  component="div"
+                >
+                  status :{course.status}
+                </Typography>
                 <Typography gutterBottom variant="h5" component="div">
-                  Instructor:<span>{course?.instructor_name}</span>
+                  Instructor:<span>{course?.instructor?.name}</span>
                 </Typography>
                 <Typography
                   gutterBottom

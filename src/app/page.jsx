@@ -30,6 +30,7 @@ import Rating from "@mui/material/Rating";
 export default function Home() {
   const {
     token,
+    addToCart,
     role,
     user,
     reusebleFunction,
@@ -56,9 +57,6 @@ export default function Home() {
       window.location.reload();
     }
   }, [pathname]);
-
-
-
 
   // ----------------fetch courses----------------------
   useEffect(() => {
@@ -272,7 +270,15 @@ export default function Home() {
                         enroll
                       </Button>
                     )}
-                    <Button size="small">add to cart</Button>
+                    <Button
+                      size="small"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        reusebleFunction(() => addToCart(BCAcourse[0]));
+                      }}
+                    >
+                      add to cart
+                    </Button>
                   </CardActions>
                 </Card>
               </div>
@@ -417,14 +423,26 @@ export default function Home() {
                               enroll
                             </Button>
                           )}
-                          <Button size="small">add to cart</Button>
+                          <Button
+                            size="small"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              reusebleFunction(() => addToCart(course));
+                            }}
+                          >
+                            add to cart
+                          </Button>
                         </CardActions>
                       </Card>
                     );
                   })}
                 </div>
-                
-                <Button className="free-btn" onClick={()=>router.push("/student/all-courses")} variant="contained">
+
+                <Button
+                  className="free-btn"
+                  onClick={() => router.push("/student/all-courses")}
+                  variant="contained"
+                >
                   view all free courses
                 </Button>
               </div>
@@ -577,7 +595,15 @@ export default function Home() {
                               enroll
                             </Button>
                           )}
-                          <Button size="small">add to cart</Button>
+                          <Button
+                            size="small"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              reusebleFunction(() => addToCart(course));
+                            }}
+                          >
+                            add to cart
+                          </Button>
                         </CardActions>
                       </Card>
                     ))}

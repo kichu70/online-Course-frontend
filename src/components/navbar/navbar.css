@@ -3,9 +3,10 @@
   width: 100%;
   position: fixed;
   top: 0;
-  z-index: 1000;
+  z-index: 100;
   background: linear-gradient(rgb(232, 152, 152),rgba(255, 255, 255, 0.304));
   background-color: rgb(240, 246, 252);
+  box-shadow: 0 0 20 rgba(221, 216, 216, 0.582);
 }
 .navbar-cnt1 {
   display: flex;

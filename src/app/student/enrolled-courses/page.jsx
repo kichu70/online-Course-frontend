@@ -35,7 +35,6 @@ const page = () => {
           },
         });
         const enrolled = res.data.data || [];
-        console.log(enrolled);
         const onlyCourses = enrolled.map((item) => ({
           ...item.course,
           enrolledId: item._id,
