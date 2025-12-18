@@ -1,0 +1,192 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.admin-layout {
+  display: flex;
+  height: 100vh;
+  background: #eaeaeae8;
+}
+
+/* Sidebar */
+.sidebar1 {
+  color: white;
+  position: relative;
+  height: 100vh;
+  width: 220px;
+}
+.sidebar2{
+  width: 220px;
+  padding: 20px;
+  background: #91485b;
+ position: fixed; 
+ height: 100vh;
+}
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.menu-item {
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: #553352;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Top Bar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.admin-info {
+  display: flex;
+  gap: 15px;
+}
+
+.logout {
+  color: red;
+  cursor: pointer;
+}
+
+/* Stats */
+.stats {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.card {
+  flex: 1;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+}
+
+.users {
+  background: #888cfa;
+}
+
+.courses {
+  background: #b59c71;
+}
+
+.lectures {
+  background: #82c8b2;
+}
+
+.card-title {
+  font-size: 14px;
+}
+
+.card-value {
+  font-size: 28px;
+  margin-top: 10px;
+}
+
+/* Sections */
+.sections {
+  display: grid;
+  /* grid-template-columns: repeat(3, 1fr); */
+  gap: 20px;
+}
+
+.section1 {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 0  2 rgb(175, 162, 162);
+}
+
+.section-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.section-box {
+  color: #555;
+  width: 100%;
+}
+
+.section-title{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.lists{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+}
+.lists div{
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+.user-avatar{
+  border-radius: 50%;
+}
+
+
+/* ----- button and function of user   */
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.status-dot.active {
+  background-color: #2ecc71; /* green */
+}
+
+.status-dot.inactive {
+  background-color: #e74c3c; /* red */
+}
+.btn {
+  text-transform: capitalize !important;
+  font-size: 13px !important;
+  padding: 6px 12px !important;
+}
+
+.btn-active {
+  background-color: #2ecc71 !important;
+  color: #fff !important;
+}
+
+.btn-active:hover {
+  background-color: #27ae60 !important;
+}
+
+.btn-inactive {
+  background-color: #e74c3c !important;
+  color: #fff !important;
+}
+
+.btn-inactive:hover {
+  background-color: #c0392b !important;
+}

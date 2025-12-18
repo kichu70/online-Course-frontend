@@ -3,7 +3,6 @@ import SideBar from "@/components/sidebar/SideBar";
 import Navbar from "@/components/navbar/Navbar";
 import "./style/home.css";
 import Image from "next/image";
-import Course from "../components/course/Course";
 import { useAuth } from "@/lib/auth";
 import GradientText from "@/components/ui/GradientText";
 
@@ -31,7 +30,6 @@ export default function Home() {
   const {
     token,
     addToCart,
-    role,
     user,
     reusebleFunction,
     onFreeEnroll,
@@ -49,6 +47,21 @@ export default function Home() {
 
   const [loading, setLoading] = useState(true); //this is used to loading time show the loading pera
   const [networkError, setNetworkError] = useState(false); //this is used to  show the network error pera
+
+// useEffect(() => {
+//   if (!token || !user) return;
+
+//   if (user.role === "admin") {
+//     router.replace("/admin");
+//     return;
+//   }
+
+//   if (user.role === "instructor") {
+//     router.replace("/instructor");
+//     return;
+//   }
+// }, [token, user]);
+
 
   // Check if we came from /success page----------to reload-----------------------
   useEffect(() => {
@@ -627,7 +640,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <Course />
         </div>
       )}
     </div>

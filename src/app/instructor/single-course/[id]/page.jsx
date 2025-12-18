@@ -24,10 +24,7 @@ const page = () => {
   const { id } = useParams();
   const {
     token,
-    onFreeEnroll,
-    reusebleFunction,
-    enrolledCourses,
-    setEnrolledCourses,
+
   } = useAuth();
   const router = useRouter();
 

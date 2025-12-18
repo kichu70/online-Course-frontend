@@ -18,7 +18,7 @@ import { toast } from "react-toastify";
 
 const page = () => {
   const params = useParams();
-  const { token, role } = useAuth();
+  const { token, } = useAuth();
 
   const [lectureData, setLectureData] = useState([]);
   const [deleteId, setDeleteId] = useState(null);

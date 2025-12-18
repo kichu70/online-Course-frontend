@@ -35,12 +35,14 @@
     display: block;
 }
 .cart-lists{
-    background-color: rgb(190, 239, 239);
+    background-color: rgba(142, 150, 150, 0.227);
+    backdrop-filter: blur(3px);
+    border-radius: 20px;
     display: flex;
     gap: 20;
     margin-bottom: 20px;
     justify-content: space-evenly;
-    border-bottom: red solid ;
+    border-bottom: rgb(199, 195, 195) solid ;
 
 }
 .cart-lists div{

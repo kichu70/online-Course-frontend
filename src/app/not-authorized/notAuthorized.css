@@ -1,0 +1,22 @@
+.notAuthorized{
+    width: 100%;
+    height: 100vh;
+    background:linear-gradient( rgb(215, 197, 202),rgb(195, 108, 108))
+}
+.notAuthorized h1{
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    padding: 15vh 10px;
+    font-size: 60;
+    font-weight: 500;
+    text-shadow: rgb(97, 90, 90) -10 20 20;
+    text-transform: capitalize;
+    color: rgb(68, 4, 4);
+}
+@media (max-width:450px) {
+    .notAuthorized h1{
+        font-size:13vw;
+    }
+}

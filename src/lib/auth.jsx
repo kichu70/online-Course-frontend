@@ -16,7 +16,6 @@ export const AuthProvider = ({ children, cookieData }) => {
 
   const [token, setToken] = useState(cookieData?.token || null);
   const [user, setUser] = useState(cookieData?.user || null);
-  const [role, setRole] = useState(null);
   const [userId, setUserId] = useState(null);
   const [cartItems, setCartItems] = useState([]);
 
@@ -25,16 +24,18 @@ export const AuthProvider = ({ children, cookieData }) => {
   useEffect(() => {}, [token]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedCart = localStorage.getItem("cartItems");
+    if (!cookieData) {
+      return;
+    } else {
+      setToken(cookieData.token);
+      setUser(cookieData.user);
 
-      if (cookieData) {
-        setToken(cookieData.token);
-        setUser(cookieData.user);
+      if (typeof window !== "undefined") {
+        const storedCart = localStorage.getItem("cartItems");
+        if (storedCart) setCartItems(JSON.parse(storedCart));
       }
-      if (storedCart) setCartItems(JSON.parse(storedCart));
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     if (cartItems.length > 0) {
@@ -76,12 +77,10 @@ export const AuthProvider = ({ children, cookieData }) => {
 
       setToken(token1);
       setUser(userData);
-      // const role = userData.role;
-      console.log(role, userId);
-      setRole(userData.role);
       setUserId(userData.id);
       setCookie(token1, userData);
       if (token1) {
+        // if(!token)return;
         if (userData.role === "admin") {
           router.push("/admin");
           toast.success("login admin");
@@ -91,8 +90,7 @@ export const AuthProvider = ({ children, cookieData }) => {
           console.log("ok**");
         } else if (userData.role === "instructor") {
           toast.success("login Instructor");
-          router.push("/");
-          console.log("ok555**");
+          router.push("/instructor");
         }
       } else {
         return;
@@ -106,15 +104,23 @@ export const AuthProvider = ({ children, cookieData }) => {
   // ---------------logout -------------
 
   const logout = () => {
+    // clear react state
+    setCartItems([]);
     setToken(null);
     setUser(null);
-    setRole(null);
     setUserId(null);
     setEnrolledCourses([]);
     clearCookie();
-    setCartItems([]);
+
+    // clear localStorage
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("cartItems");
+    }
+
+    // clear cookies
 
     toast.success("logout successfully");
+    router.push("/login");
   };
 
   // ------------adding token on register ----------
@@ -202,14 +208,10 @@ export const AuthProvider = ({ children, cookieData }) => {
     return false; // allow
   };
 
-
-
-
-    // -------------------------helper function to add once----------
+  // -------------------------helper function to add once----------
   const isInCart = (courseId) => {
     return cartItems?.some((item) => item.id === courseId);
   };
-
 
   return (
     <>
@@ -220,7 +222,6 @@ export const AuthProvider = ({ children, cookieData }) => {
           token,
           login,
           userId,
-          role,
           logout,
           setAuthState,
           reusebleFunction,

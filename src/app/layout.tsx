@@ -3,9 +3,11 @@ import "./globals.css";
 import {AuthProvider} from "../lib/auth"
 import { getCookie } from "@/lib/cookies/getCookies";
 
-export const metadata: Metadata = {
-  title: "Online Course",
-  description: "A Online platform ",
+export const metadata = {
+  title: "EduClass",
+  icons: {
+    icon: "/favicon.ico", 
+  },
 };
 
 export default async function RootLayout({
@@ -15,6 +17,7 @@ export default async function RootLayout({
 }>) {
   const cookieData = await getCookie()
 
+  
   return (
     <html lang="en">
       <body>

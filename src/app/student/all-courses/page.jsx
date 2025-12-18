@@ -44,7 +44,7 @@ const page = () => {
   // SEARCH FILTER (SAFE)
   const filteredCourses = search
     ? course.filter((c) =>
-        `${c.title} ${c.category} ${c.description} ${c.instructor_name}`
+        `${c.title} ${c.category} ${c.description} ${c.instructor_name} ${c.price}`
           .toLowerCase()
           .includes(search.toLowerCase())
       )

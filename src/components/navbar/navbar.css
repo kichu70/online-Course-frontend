@@ -98,17 +98,40 @@
 
 }
 
-@media (max-width: 989px){
-
+@media (max-width: 789px){
+.logo{
+  height: 50;
+  width: 100%;
+}
+}
+@media (max-width: 659px){
+.logo{
+  height: 40;
+  width: 100%;
+}
 }
 
 @media (max-width: 617px)  {
-.navbar select{
+  .logo{
+  height: 60;
+  width: 100%;
+}
+.navbar .all-course{
   display: none;
 }
 
 }
 
 @media (max-width: 576px) {
-    
+    .logo{
+  height: 10vw;
+  width: 100%;
 }
+
+}
+/* @media (max-width: 456px) {
+  .cart-btn{
+    display: none;
+  }
+
+} */

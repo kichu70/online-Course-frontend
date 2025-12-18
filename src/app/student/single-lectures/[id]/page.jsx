@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import "./singleLecture.css";
 const page = () => {
   const params = useParams();
-  const { token,role } = useAuth();
+  const { token, } = useAuth();
   const [lectureData, setLectureData] = useState([]);
 const [completedSent, setCompletedSent] = useState(false);
 

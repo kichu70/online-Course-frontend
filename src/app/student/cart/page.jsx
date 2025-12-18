@@ -21,13 +21,10 @@ import Image from "next/image";
 const page = () => {
   const {
     token,
-    addToCart,
-    role,
     user,
     reusebleFunction,
     onFreeEnroll,
     enrolledCourses,
-    setEnrolledCourses,
     cartItems,
     removeFromCart,
   } = useAuth();
@@ -41,16 +38,23 @@ const page = () => {
     }
   }, [cartItems]);
 
+useEffect(() => {
+  if (cartItems && cartItems.length > 0) {
+    setSeletedCourse(
+      cartItems
+        .filter((item) => !enrolledCourses?.includes(item.id))
+        .map((item) => item.id)
+    );
+  }
+}, [cartItems, enrolledCourses]);
+
   useEffect(() => {
-    if (cartItems && cartItems.length > 0) {
-      setSeletedCourse(cartItems.map((item) => item.id));
-    }
-  }, [cartItems]);
-  useEffect(() => {
-    const totalPrice = cartItems
-      .filter((item) => selectedCourse.includes(item.id))
-      .reduce((sum, item) => sum + parseFloat(item.price || 0), 0);
-    setTotal(totalPrice);
+const totalPrice = cartItems
+  .filter(
+    (item) => selectedCourse.includes(item.id) && !enrolledCourses?.includes(item.id)
+  )
+  .reduce((sum, item) => sum + (item.price || 0), 0);
+setTotal(totalPrice);
   }, [selectedCourse, cartItems]);
 
   console.log(cartItems);
@@ -80,6 +84,7 @@ const page = () => {
                 <h1 className="price">₹{course.price}</h1>
                 <input
                   type="checkbox"
+                  disabled={enrolledCourses?.includes(course.id)}
                   checked={selectedCourse.includes(course.id)}
                   onChange={() => {
                     setSeletedCourse((prev) =>

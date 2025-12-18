@@ -38,9 +38,16 @@ const SideBar = ({ isOpen, onClose }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen, onClose]);
+
+
+
+  const handleLogout = () => {
+  onClose();   // close sidebar immediately
+  logout();    // then logout
+};
   return (
     <div ref={sidebarRef} className={`sidebar ${isOpen ? "open" : ""}`}>
-      {!user || user?.role === "student" ? (
+      {user?.role === "student" ? (
         <>
           {/* Section 1 */}
           <div className="sb-sct1">
@@ -65,7 +72,10 @@ const SideBar = ({ isOpen, onClose }) => {
           {/* Section 2 */}
           <div className="sb-sct2">
             <div className="sb-sct2-cnt1">
-              <h1>courses</h1>
+              <h1 className="course-heading">courses</h1>
+                          <button className="sidebar-all-course" onClick={() => router.push("/student/all-courses")}>
+              all course
+            </button>
                 <button onClick={()=>router.push("/student/enrolled-courses")}>enroled course's</button>
               {token && (
                 <select value={category} onChange={handleCategoryChange}>
@@ -76,6 +86,7 @@ const SideBar = ({ isOpen, onClose }) => {
                   <option value="B-Com">B Com</option>
                 </select>
               )}
+              
               <button>completed coursers</button>
             </div>
             <div className="sb-sct2-cnt2"></div>
@@ -86,7 +97,7 @@ const SideBar = ({ isOpen, onClose }) => {
           <div className="sb-sct3">
             <div className="sb-sct3-cnt1">
               {user ? (
-                <h3 onClick={logout}>logout</h3>
+                <h3 onClick={handleLogout}>logout</h3>
               ) : (
                 <>
                   <Link href={"/login"}>
@@ -140,7 +151,7 @@ const SideBar = ({ isOpen, onClose }) => {
           <div className="sb-sct3">
             <div className="sb-sct3-cnt1">
               {user ? (
-                <h3 onClick={logout}>logout</h3>
+                <h3 onClick={handleLogout}>logout</h3>
               ) : (
                 <>
                   <Link href={"/login"}>
