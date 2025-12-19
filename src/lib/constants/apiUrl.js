@@ -20,6 +20,7 @@ TOGGLE_COURSE_STATUS: `${API_BASE_URL}/admin/toggle-course-status`,
 DELETE_REACTIVATE_COURSE: `${API_BASE_URL}/admin/delete-reactive-course`,
 
 ALL_LECTURES: `${API_BASE_URL}/admin/all-lecture`,
+ALL_LECTURES_OF_COURSE: `${API_BASE_URL}/all-lecture-course`,
 SINGLE_LECTURE: `${API_BASE_URL}/admin/single-lecture`,
 DELETE_REACTIVATE_LECTURE: `${API_BASE_URL}/admin/delete-reactive-lecture`,
 };

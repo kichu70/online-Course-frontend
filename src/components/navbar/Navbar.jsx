@@ -10,6 +10,7 @@ import EduclassLogo from "../../../public/logoEduclass.png";
 import Image from "next/image";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+import Button from "@mui/material/Button";
 const Navbar = () => {
   const router = useRouter();
   const { logout, token, user } = useAuth();
@@ -57,7 +58,7 @@ const Navbar = () => {
               }}
             />
             <button
-              className="all-course"
+              className="all-course1"
               onClick={() => router.push("/student/all-courses")}
             >
               all course
@@ -123,7 +124,7 @@ const Navbar = () => {
       ) : // ---------------admin nav---------------------------
 
       user?.role === "admin" ? (
-        <div>aa</div>
+        <div><Button onClick={()=>{router.push("/admin")}} variant="contained" sx={{margin:"20px", background:"#4323 !important"}}>go to admin home</Button></div>
       ) : (
         <></>
       )}

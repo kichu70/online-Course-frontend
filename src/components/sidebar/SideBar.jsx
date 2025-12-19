@@ -5,6 +5,7 @@ import { useAuth } from "@/lib/auth";
 import defult_profile from "../../../public/profile.jpg";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { API_BASE_URL } from "@/lib/constants/apiUrl";
 
 const SideBar = ({ isOpen, onClose }) => {
   const { logout, token, user } = useAuth();
@@ -45,6 +46,14 @@ const SideBar = ({ isOpen, onClose }) => {
   onClose();   // close sidebar immediately
   logout();    // then logout
 };
+
+const profileSrc = user?.profile
+  ? user.profile.startsWith("http")
+    ? user.profile
+    : `${API_BASE_URL}${user.profile}`
+  : "/profile.jpg";
+
+
   return (
     <div ref={sidebarRef} className={`sidebar ${isOpen ? "open" : ""}`}>
       {user?.role === "student" ? (
@@ -56,7 +65,7 @@ const SideBar = ({ isOpen, onClose }) => {
             <div className="sb-sct1-cnt2">
               <img
                 alt="Profile"
-                src={user?.profile ? user.profile : "/profile.jpg"}
+                src={profileSrc}
                 style={{
                   width: "80px",
                   height: "80px",

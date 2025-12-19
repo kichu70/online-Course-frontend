@@ -7,7 +7,7 @@ export function middleware(req: NextRequest) {
   const url = req.nextUrl.pathname;
 
   // ---------- PUBLIC ROUTES ----------
-  const publicRoutes = ["/login", "/register"];
+  const publicRoutes = ["/login", "/register","/"];
 
   if (publicRoutes.includes(url)) {
     return NextResponse.next();
@@ -65,5 +65,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|favicon.ico).*)"],
+  matcher: ["/((?!_next|favicon.ico|api|static|assets|homeImg).*)"],
 };

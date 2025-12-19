@@ -60,7 +60,7 @@ const page = () => {
         formData.append("role", role);
         formData.append("bio", bio);
         if (selectedImage) {
-          formData.append("profile_pic", selectedImage);
+          formData.append("profile", selectedImage);
         }
         const res = await axios.post(AUTH_API.REGISTER, formData);
         console.log("added user", res.data.AccessToken);
