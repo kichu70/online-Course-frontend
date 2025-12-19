@@ -37,10 +37,8 @@ const page = () => {
           id: _id,
           ...rest,
         }));
-        console.log(res.data.data);
         setCourse(idReplace);
         setTotalCourse(res.data.totalCourse);
-        console.log(res.data);
       } catch (err) {
         console.log(err, "error is in the fetch course  in the fr");
       }

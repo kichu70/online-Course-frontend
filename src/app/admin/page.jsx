@@ -87,7 +87,6 @@ const page = () => {
           id: _id,
           ...rest,
         }));
-        console.log(res.data.data);
         setCourse(idReplace.slice(0, 5));
         setTotalCourse(res.data.totalCourse);
       } catch (err) {
@@ -149,7 +148,6 @@ const page = () => {
           id: _id,
           ...rest,
         }));
-        console.log(idReplace);
         setLecture(idReplace.slice(0, 5));
       } catch (err) {
         console.log(err, "error is in the fetchLecture fr");
@@ -186,7 +184,7 @@ const page = () => {
             {/* <div className="menu-item">Dashboard</div> */}
             <div
               className="menu-item"
-              onClick={() => router.push("/admin/users")}
+              onClick={() => router.push("/admin/all-users")}
             >
               Users
             </div>
@@ -242,7 +240,12 @@ const page = () => {
           <div className="section1">
             <div className="section-title">
               <h4>User Management</h4>
-              <Button className="view-all-users"onClick={()=>router.push("/admin/all-users")}>view all</Button>
+              <Button
+                className="view-all-users"
+                onClick={() => router.push("/admin/all-users")}
+              >
+                view all
+              </Button>
             </div>
             <div className="section-box">
               <table className="admin-table">
@@ -285,12 +288,17 @@ const page = () => {
                       <td>
                         <Button
                           variant="contained"
-                          className={`btn ${
+                          disabled={user.role === "admin"}
+                          className={`btn2 ${
                             user.is_deleted ? "btn-inactive" : "btn-active"
                           }`}
                           onClick={() => DeleteUser(user.id)}
                         >
-                          {user.is_deleted ? "Activate" : "Delete"}
+                          {user.role === "admin"
+                            ? "Admin"
+                            : user.is_deleted
+                            ? "Activate"
+                            : "Delete"}
                         </Button>
                       </td>
                     </tr>
@@ -303,7 +311,12 @@ const page = () => {
           <div className="section1">
             <div className="section-title">
               <h4>Course Management</h4>
-              <Button className="view-all-users" onClick={()=>router.push("/admin/all-courses")}>view all</Button>
+              <Button
+                className="view-all-users"
+                onClick={() => router.push("/admin/all-courses")}
+              >
+                view all
+              </Button>
             </div>
             <div className="section-box">
               <table className="admin-table">
@@ -389,7 +402,12 @@ const page = () => {
           <div className="section1">
             <div className="section-title">
               Lecture Management
-              <Button className="view-all-users" onClick={()=>router.push("/admin/all-lectures")}>view all</Button>
+              <Button
+                className="view-all-users"
+                onClick={() => router.push("/admin/all-lectures")}
+              >
+                view all
+              </Button>
             </div>
             <div className="section-box">
               <table className="admin-table">
