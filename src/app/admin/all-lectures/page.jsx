@@ -64,7 +64,7 @@ const page = () => {
   };
 
   return (
-    <div>
+    <div><Navbar/>
       <div className="allLecture">
         <div className="section2">
           <div className="section-title">
