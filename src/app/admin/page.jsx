@@ -11,8 +11,11 @@ import defult_profile from "../../../public/profile.jpg";
 import Image from "next/image";
 import Button from "@mui/material/Button";
 import { API_BASE_URL } from "@/lib/constants/apiUrl";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
+
   const { token, user, logout } = useAuth();
 
   const [refresh, setRefresh] = useState(false);
@@ -181,9 +184,24 @@ const page = () => {
 
           <div className="menu">
             {/* <div className="menu-item">Dashboard</div> */}
-            <div className="menu-item">Users</div>
-            <div className="menu-item">Courses</div>
-            <div className="menu-item">Lectures</div>
+            <div
+              className="menu-item"
+              onClick={() => router.push("/admin/users")}
+            >
+              Users
+            </div>
+            <div
+              className="menu-item"
+              onClick={() => router.push("/admin/all-courses")}
+            >
+              Courses
+            </div>
+            <div
+              className="menu-item"
+              onClick={() => router.push("/admin/all-lectures")}
+            >
+              Lectures
+            </div>
           </div>
         </div>
       </div>
@@ -224,7 +242,7 @@ const page = () => {
           <div className="section1">
             <div className="section-title">
               <h4>User Management</h4>
-              <Button className="view-all-users">view all</Button>
+              <Button className="view-all-users"onClick={()=>router.push("/admin/all-users")}>view all</Button>
             </div>
             <div className="section-box">
               <table className="admin-table">
@@ -285,7 +303,7 @@ const page = () => {
           <div className="section1">
             <div className="section-title">
               <h4>Course Management</h4>
-              <Button className="view-all-users">view all</Button>
+              <Button className="view-all-users" onClick={()=>router.push("/admin/all-courses")}>view all</Button>
             </div>
             <div className="section-box">
               <table className="admin-table">
@@ -369,7 +387,10 @@ const page = () => {
           </div>
 
           <div className="section1">
-            <div className="section-title">Lecture Management</div>
+            <div className="section-title">
+              Lecture Management
+              <Button className="view-all-users" onClick={()=>router.push("/admin/all-lectures")}>view all</Button>
+            </div>
             <div className="section-box">
               <table className="admin-table">
                 <thead>

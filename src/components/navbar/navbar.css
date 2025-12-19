@@ -82,6 +82,13 @@
   display: flex;
   gap: 20px;
 }
+.admin-nav-btns{
+  justify-content: center;
+  display: flex;
+}
+
+
+
 /* .mbl{
 } */
 /* --------------------------responsive--------------------- */

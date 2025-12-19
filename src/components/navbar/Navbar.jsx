@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 import SideBar from "../sidebar/SideBar";
 import EduclassLogo from "../../../public/logoEduclass.png";
 import Image from "next/image";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import Button from "@mui/material/Button";
 const Navbar = () => {
   const router = useRouter();
@@ -29,7 +29,7 @@ const Navbar = () => {
   const toggleSidebar = () => {
     setSidebarOpen((prev) => !prev); // toggle the sidebar visibility
   };
-  
+
   return (
     <div className="navbar">
       {user?.role === "student" || !token ? (
@@ -68,8 +68,11 @@ const Navbar = () => {
             {user ? (
               <>
                 {/* <button onClick={logout}>logout</button> */}
-                <ShoppingCartIcon className="cart-btn" onClick={() => router.push("/student/cart")}/>
-                <MenuOutlinedIcon  className="" onClick={toggleSidebar}/>
+                <ShoppingCartIcon
+                  className="cart-btn"
+                  onClick={() => router.push("/student/cart")}
+                />
+                <MenuOutlinedIcon className="" onClick={toggleSidebar} />
               </>
             ) : (
               <>
@@ -124,7 +127,52 @@ const Navbar = () => {
       ) : // ---------------admin nav---------------------------
 
       user?.role === "admin" ? (
-        <div><Button onClick={()=>{router.push("/admin")}} variant="contained" sx={{margin:"20px", background:"#4323 !important"}}>go to admin home</Button></div>
+        <div className="admin-nav-btns">
+          <Link href={"/"}>
+            <Image
+              className="logo"
+              src={EduclassLogo}
+              alt="EduClass"
+              height={80}
+            />
+          </Link>
+          <Button
+            onClick={() => {
+              router.push("/admin");
+            }}
+            variant="contained"
+            sx={{ margin: "20px", background: "#4323 !important" }}
+          >
+            go to admin home
+          </Button>
+          <Button
+            onClick={() => {
+              router.push("/admin/all-courses");
+            }}
+            variant="contained"
+            sx={{ margin: "20px", background: "#4323 !important" }}
+          >
+            all courses
+          </Button>
+          <Button
+            onClick={() => {
+              router.push("/admin/all-users");
+            }}
+            variant="contained"
+            sx={{ margin: "20px", background: "#4323 !important" }}
+          >
+            all user
+          </Button>
+          <Button
+            onClick={() => {
+              router.push("/admin/all-lectures");
+            }}
+            variant="contained"
+            sx={{ margin: "20px", background: "#4323 !important" }}
+          >
+            all lecture
+          </Button>
+        </div>
       ) : (
         <></>
       )}

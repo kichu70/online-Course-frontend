@@ -1,0 +1,103 @@
+.all-courses1{
+    /* background-color: #c0392b; */
+    max-width: 1150px;
+    padding: 20px;
+    margin:150px auto 0;
+    
+}
+.admin-table1 {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  /* background-color: #2ecc71; */
+  padding: 20px !important;
+}
+
+.section1 {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 2px rgb(175, 162, 162);
+}
+
+.section-title1 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.admin-table1 th,
+.admin-table1 td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #ccc;
+}
+
+.user-avatar1 {
+  border-radius: 50%;
+}
+
+/* Status dot */
+.status-dot1 {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.status-dot1.active {
+  background-color: #2ecc71;
+}
+
+.status-dot1.inactive {
+  background-color: #e74c3c;
+}
+
+/* Buttons */
+.btn {
+  text-transform: capitalize !important;
+  font-size: 13px !important;
+  padding: 6px 12px !important;
+}
+
+.btn-active1 {
+  background-color: #2ecc71 !important;
+  color: #fff !important;
+}
+
+.btn-active1:hover {
+  background-color: #27ae60 !important;
+}
+
+.btn-inactive1 {
+  background-color: #e74c3c !important;
+  color: #fff !important;
+}
+
+.btn-inactive1:hover {
+  background-color: #c0392b !important;
+}
+
+
+/* ----------------------dot-------- */
+.btn-approved1 {
+  background-color: #4caf50 !important; /* Green */
+  color: white;
+}
+
+.btn-rejected1 {
+  background-color: #f44336 !important; /* Red */
+  color: white;
+}
+
+.btn-pending1 {
+  background-color: #ff9800 !important; /* Orange */
+  color: white;
+}
+
+.status-dot1.pending-dot1 {
+  background-color: #ff9800; /* Orange */
+}
