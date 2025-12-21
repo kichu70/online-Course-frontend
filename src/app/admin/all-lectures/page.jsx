@@ -38,7 +38,6 @@ const page = () => {
           ...rest,
         }));
         setLecture(idReplace);
-        console.log(idReplace);
       } catch (err) {
         console.log(err, "error is in the fetchLecture fr");
       }

@@ -25,6 +25,7 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import { handlePayment } from "@/components/payment/paymentButton";
 import Rating from "@mui/material/Rating";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Home() {
   const {
@@ -137,6 +138,9 @@ export default function Home() {
 
       {loading ? (
         <div className="loading-course">
+<div className="circle-loader"></div>
+
+
           <p>Loading courses...</p>
         </div>
       ) : networkError ? (

@@ -1,0 +1,63 @@
+.all-lectures{
+margin-top: 150px;
+}
+.All-lectuers-sct1-cnt1 {
+  max-width: 1250px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+  padding: 20px;
+  align-items: start;
+  justify-content: start;
+}
+.all-lecturs-sct1-cnt2 {
+  width: 100%;
+}
+
+.all-lecturs-sct1-cnt2 .all-lecture-card2 {
+  background: none;
+  box-shadow: none;
+  border: 2px double rgba(70, 67, 67, 0.374) !important ;
+  background-color: rgba(245, 210, 210, 0.274);
+  margin: auto;
+  max-height: 400px;
+  width: 100%;
+  padding-top: 20;
+  display: flex;
+  gap: 50px;
+  align-items: center;
+  
+}
+.all-lecture-video{
+  padding: 20px;
+  max-width: 100%;
+}
+.all-lecturs-sct1-cnt2 .CardContent{
+  max-width: 500px !important;
+}
+
+@media (max-width:750px) {
+  .all-lecture-video{
+    padding: 0;
+  }
+  .all-lecturs-sct1-cnt2 .all-lecture-card2{
+    gap: 20px;
+    max-height: fit-content;
+  }
+}
+@media (max-width:650px) {
+  .all-lecture-video{
+    padding: 0;
+    margin: auto;
+    width: 100%;
+  }
+  .all-lecturs-sct1-cnt2 .all-lecture-card2{
+    display: block;
+  }
+}
+@media (max-width:500px) {
+  .all-lecturs-sct1-cnt2 .all-lecture-card2{
+    display: block;
+  }
+}

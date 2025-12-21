@@ -81,3 +81,138 @@ input[type="search"]:active {
   text-decoration: line-through;
   margin: 0;
 }
+
+
+
+
+.circle-loader {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ddd;
+  border-top: 5px solid #3aafa9; /* your theme color */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* Status dot */
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.status-dot.active {
+  background-color: #2ecc71;
+}
+
+.status-dot.inactive {
+  background-color: #e74c3c;
+}
+
+/* Buttons */
+.btn {
+  text-transform: capitalize !important;
+  font-size: 13px !important;
+  padding: 6px 12px !important;
+  height: fit-content;
+  width: fit-content;
+}
+
+.btn-active {
+  background-color: #2ecc71 !important;
+  color: #fff !important;
+}
+
+.btn-active:hover {
+  background-color: #27ae60 !important;
+}
+
+.btn-inactive {
+  background-color: #e74c3c !important;
+  color: #fff !important;
+}
+
+.btn-inactive:hover {
+  background-color: #c0392b !important;
+}
+
+
+/* ----------------------dot-------- */
+.btn-approved {
+  background-color: #4caf50 !important; /* Green */
+  color: white;
+}
+
+.btn-rejected {
+  background-color: #f44336 !important; /* Red */
+  color: white;
+}
+
+.btn-pending {
+  background-color: #ff9800 !important; /* Orange */
+  color: white;
+}
+
+.status-dot.pending-dot {
+  background-color: #ff9800; /* Orange */
+}
+
+
+@media (max-width:910px) {
+  .sidebar1{
+    height: 100%;
+  }
+  .sidebar2 {
+  width: 220px;
+  padding: 20px;
+  background: #91485b;
+  position: relative;
+  height: 100%;
+}
+
+}
+
+
+
+
+/* ====================not found page====================== */
+
+
+
+
+
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  font-size: 80px;
+  margin: 0;
+}
+
+.link {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #1976d2;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+}

@@ -51,6 +51,10 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  // ---------- STUDENT ROUTES ----------
+  if (url.startsWith("/student") && role !== "student") {
+    return NextResponse.redirect(new URL("/not-authorized", req.url));
+  }
   // ---------- ADMIN ROUTES ----------
   if (url.startsWith("/admin") && role !== "admin") {
     return NextResponse.redirect(new URL("/not-authorized", req.url));

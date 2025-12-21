@@ -6,17 +6,20 @@ import { useParams, useRouter } from "next/navigation";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { INSTRUCTOR_API, API_BASE_URL } from "@/lib/constants/apiUrl";
+import { ADMIN_API, API_BASE_URL } from "@/lib/constants/apiUrl";
 
 import Navbar from "@/components/navbar/Navbar";
 import { handlePayment } from "@/components/payment/paymentButton";
-import "./all-lectures.css";
+import "./courseLectures.css";
 import Button from "@mui/material/Button";
 
 const Page = () => {
   const [lectures, setLectures] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+    const [refresh, setRefresh] = useState(false);
+  
 
   const params = useParams();
   const courseId = params?.id;
@@ -32,14 +35,13 @@ const Page = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `${INSTRUCTOR_API.ALL_LECTURES}?courseId=${courseId}`,
+          `${ADMIN_API.ALL_LECTURES_OF_COURSE}?courseId=${courseId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        const data = res?.data?.lecture || [];
+        const data = res?.data?.data || [];
         setLectures(data);
-        console.log(data);
       } catch (err) {
         console.log("Error fetching lectures:", err);
         setLectures([]);
@@ -52,18 +54,38 @@ const Page = () => {
     };
 
     fetchData();
-  }, [courseId, token]);
+  }, [courseId, token,refresh]);
 
-   //---------------Redirect if no course found-------------------------------------
-    useEffect(() => {
-      if (!loading && lectures.length === 0) {
-        const timer = setTimeout(() => {
-          router.back();
-        }, 2000);
+  //---------------Redirect if no course found-------------------------------------
+  useEffect(() => {
+    if (!loading && lectures.length === 0) {
+      const timer = setTimeout(() => {
+        router.back();
+      }, 2000);
 
-        return () => clearTimeout(timer);
-      }
-    }, [loading, lectures, router]);
+      return () => clearTimeout(timer);
+    }
+  }, [loading, lectures, router]);
+
+
+  // ---------delete active lecture-------------
+  const lectureCourse = async (id) => {
+    try {
+      const res = await axios.put(
+        `${ADMIN_API.DELETE_REACTIVATE_LECTURE}?lectureId=${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setRefresh((p) => !p);
+    } catch (err) {
+      console.log(err, "error is in the delete lecture admin fr");
+    }
+  };  
+
 
   if (loading)
     return (
@@ -74,13 +96,12 @@ const Page = () => {
   if (error)
     return (
       <p className="loading-course" style={{ padding: 20 }}>
-        not purchased
+        not lecture found
       </p>
     );
   if (!lectures.length)
     return (
       <div className="loading-course">
-        {" "}
         <p style={{ padding: 20 }}>No lectures found for this course.</p>
         <Button variant="contained" className="btn">
           add lecture
@@ -128,7 +149,7 @@ const Page = () => {
                 // sx={{ width: 400, cursor: "pointer" }}
                 onClick={() =>
                   router.push(
-                    `/instructor/single-lecture/${lec._id}?lectureId=${lec._id}`
+                    `/admin/single-lecture/${lec._id}?lectureId=${lec._id}`
                   )
                 }
               >
@@ -169,6 +190,15 @@ const Page = () => {
                     {lec.description || "No description available."}
                   </Typography>
                 </CardContent>
+                <Button
+                  variant="contained"
+                  className={`btn ${
+                    lec.is_deleted ? "btn-inactive" : "btn-active"
+                  }`}
+                  onClick={(e) =>{e.stopPropagation(); lectureCourse(lec._id)}}
+                >
+                  {lec.is_deleted ? "Activate" : "Delete"}
+                </Button>
               </Card>
             </div>
           );

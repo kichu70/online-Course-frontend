@@ -13,7 +13,7 @@ const page = () => {
       toast.error("not Authorized");
   
       const timer = setTimeout(() => {
-        router.push("/"); // redirect to home
+        router.back(); // redirect to home
       }, 1500);
   
       return () => clearTimeout(timer);

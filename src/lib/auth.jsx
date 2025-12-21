@@ -71,7 +71,7 @@ export const AuthProvider = ({ children, cookieData }) => {
         email,
         password,
       });
-      console.log("Full backend response:", res.data);
+      // console.log("Full backend response:", res.data);
       const token1 = res.data.AccessToken;
       const userData = res.data.userData;
 
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children, cookieData }) => {
         } else if (userData.role === "student") {
           toast.success("login student");
           router.push("/");
-          console.log("ok**");
+          // console.log("ok**");
         } else if (userData.role === "instructor") {
           toast.success("login Instructor");
           router.push("/instructor");
@@ -170,7 +170,7 @@ export const AuthProvider = ({ children, cookieData }) => {
           },
         }
       );
-      console.log(res.data);
+      // console.log(res.data);
       toast.success(res.data.message);
       setEnrolledCourses((prev) => [...prev, courseId]);
     } catch (err) {

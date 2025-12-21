@@ -28,7 +28,12 @@ const page = () => {
 
   const [totalLecture, setTotalLecture] = useState(0);
   const [lecture, setLecture] = useState([]);
+  
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
+  const [dots, setDots] = useState("");
+  
   // ------------------user data -----------------
 
   useEffect(() => {
@@ -92,6 +97,9 @@ const page = () => {
       } catch (err) {
         console.log(err, "error is in the fetch course  in the fr");
       }
+       finally {
+          setLoading(false);
+        }
     };
     fetchCourse();
   }, [refresh, token, user]);
@@ -113,6 +121,7 @@ const page = () => {
     } catch (err) {
       console.log(err, "error is in the delete course admin fr");
     }
+
   };
   // --------------aprove reject course---------------
 
@@ -173,8 +182,27 @@ const page = () => {
     }
   };
 
+
+
+// ---------------dot---------
+useEffect(() => {
+  const interval = setInterval(() => {
+    setDots(prev => (prev.length === 10 ? "" : prev + "."));
+  }, 100);
+
+  return () => clearInterval(interval);
+}, []);
+
+
   return (
+    <>    {loading ? (
+        <div className="loading-course">
+          <div className="circle-loader"></div>
+          <p>Loading courses{dots}</p>
+        </div>
+      ) :(
     <div className="admin-layout">
+        
       {/* Sidebar */}
       <div className="sidebar1">
         <div className="sidebar2">
@@ -257,6 +285,7 @@ const page = () => {
                     <th>Role</th>
                     <th>Status</th>
                     <th>Action</th>
+                    <th>view single</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -301,6 +330,8 @@ const page = () => {
                             : "Delete"}
                         </Button>
                       </td>
+                      <td><Button onClick={()=>router.push(`/admin/single-user/${courseItem.id}`)}> view</Button></td>
+
                     </tr>
                   ))}
                 </tbody>
@@ -328,6 +359,8 @@ const page = () => {
                     <th>Total Lectures</th>
                     <th>delete/active</th>
                     <th>delete/active</th>
+                    <th>view single</th>
+
                   </tr>
                 </thead>
                 <tbody>
@@ -365,15 +398,7 @@ const page = () => {
                       </td>
 
                       <td>
-                        <span
-                          className={`status-dot ${
-                            courseItem.status === "approved"
-                              ? "active"
-                              : courseItem.status === "rejected"
-                              ? "inactive"
-                              : "pending-dot"
-                          }`}
-                        ></span>
+
                         <Button
                           variant="contained"
                           className={`btn ${
@@ -392,6 +417,8 @@ const page = () => {
                             : "Pending"}
                         </Button>
                       </td>
+                      <td><Button onClick={()=>router.push(`/admin/single-course/${courseItem.id}`)}> view</Button></td>
+
                     </tr>
                   ))}
                 </tbody>
@@ -448,7 +475,7 @@ const page = () => {
                         >
                           {lecture.is_deleted ? "Activate" : "Delete"}
                         </Button>
-                        {lecture.is_deleted}
+                        
                       </td>
                     </tr>
                   ))}
@@ -458,7 +485,8 @@ const page = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div>)}
+    </>
   );
 };
 
