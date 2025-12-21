@@ -172,6 +172,14 @@ const Navbar = () => {
           >
             all lecture
           </Button>
+
+          <Button
+            variant="contained"
+            sx={{ margin: "20px", background: "#4323 !important" }}
+            onClick={logout}
+          >
+            logout
+          </Button>
         </div>
       ) : (
         <></>

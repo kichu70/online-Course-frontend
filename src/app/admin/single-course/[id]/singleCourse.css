@@ -1,0 +1,43 @@
+.single-course{
+    margin-top: 150px;
+}
+.single-course-sct1-cnt1{
+
+    margin:10vh auto;
+    max-width: 1250px;
+}
+.single-course-sct1-cnt1 .card{
+    width: 80%;
+    margin: 0 auto ;
+    padding: 20;
+
+}
+.single-course-sct1-cnt1 .card{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    
+}
+.single-course-sct1-cnt1 img{
+    height: fit-content!important;
+    width: 100%;
+}
+.single-course-sct1-cnt1 .cnt{
+    padding: 50px 0 ;
+}
+.lecture-btns{
+    width: 100%;
+    /* background-color: aqua; */
+    margin: 20px 0 0 ;
+    display: flex;
+    gap: 20px;
+}
+.all-lecture{
+    width: 100%;
+    background-color: rgb(58, 21, 29) !important;
+}
+.add-lecutre{
+    width: 100%;
+    background-color: rgb(50, 81, 55) !important;
+
+}
