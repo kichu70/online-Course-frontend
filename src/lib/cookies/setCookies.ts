@@ -2,7 +2,10 @@
 
 import { cookies } from "next/headers";
 
-export const setCookie = async (token: string, userData: any) => {
+export const setCookie = async (
+  token: string,
+  userData: unknown
+) => {
   const cookieStore = await cookies();
 
   cookieStore.set("token", token, {
@@ -14,10 +17,10 @@ export const setCookie = async (token: string, userData: any) => {
   });
 
   cookieStore.set("user", JSON.stringify(userData), {
-    httpOnly: false, // allow reading on client
+    httpOnly: false,
     secure: true,
     sameSite: "strict",
     path: "/",
     maxAge: 60 * 60 * 24 * 7,
   });
-}
+};
