@@ -124,7 +124,10 @@ const page = () => {
                     onClick={(e) => {
                       e.stopPropagation();
                     }}
-                  ></CardActions>
+                  >
+            <Button onClick={()=>router.push(`/student/track-progress/${course._id}`)}>view progress</Button>
+
+                  </CardActions>
                 </Card>
               ))}
             </div>

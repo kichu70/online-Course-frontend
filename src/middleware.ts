@@ -7,7 +7,7 @@ export function middleware(req: NextRequest) {
   const url = req.nextUrl.pathname;
 
   // ---------- PUBLIC ROUTES ----------
-  const publicRoutes = ["/login", "/register","/"];
+  const publicRoutes = ["/login","/forget-password","/reset-password","/verify-otp", "/register","/","/success"];
 
   if (publicRoutes.includes(url)) {
     return NextResponse.next();

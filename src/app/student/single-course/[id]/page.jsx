@@ -157,6 +157,7 @@ const page = () => {
               >
                 add to cart
               </Button>
+
             </CardActions>
           </div>
         </div>

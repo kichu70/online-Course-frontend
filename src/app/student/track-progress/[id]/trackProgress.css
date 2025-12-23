@@ -1,0 +1,130 @@
+/* Container */
+.track-progress-container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* Breadcrumb */
+.track-progress-breadcrumb {
+  color: #6b7280; /* gray-500 */
+  margin-bottom: 1rem;
+}
+
+/* Course Card */
+.course-card {
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.course-thumbnail {
+  width: 10rem;
+  height: 7rem;
+  object-fit: cover;
+  border-radius: 0.375rem;
+}
+
+.course-info h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.course-info p {
+  color: #374151; /* gray-700 */
+  margin-bottom: 0.25rem;
+}
+
+/* Stats Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stats-card {
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.stats-card p:first-child {
+  color: #6b7280; /* gray-500 */
+}
+
+.stats-card p:last-child {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* Progress Bar */
+.progress-card {
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.progress-bar-container {
+  width: 100%;
+  background-color: #fefefe; /* gray-200 */
+  height: 1rem;
+  border-radius: 9999px;
+}
+
+.progress-bar {
+  background-color: #16a34a; /* green-600 */
+  height: 1rem;
+  border-radius: 9999px;
+}
+
+/* Detailed Progress */
+.detailed-progress {
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.detailed-progress ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.detailed-progress li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #374151; /* gray-700 */
+  margin-bottom: 0.5rem;
+}
+
+.completed-icon {
+  color: #16a34a; /* green */
+  font-weight: bold;
+}
+
+.pending-icon {
+  color: #9ca3af; /* gray-400 */
+  font-weight: bold;
+}
+
+/* Button */
+.back-button {
+  background-color: #2563eb; /* blue-600 */
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}

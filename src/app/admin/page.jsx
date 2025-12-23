@@ -28,12 +28,12 @@ const page = () => {
 
   const [totalLecture, setTotalLecture] = useState(0);
   const [lecture, setLecture] = useState([]);
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   const [dots, setDots] = useState("");
-  
+
   // ------------------user data -----------------
 
   useEffect(() => {
@@ -96,10 +96,9 @@ const page = () => {
         setTotalCourse(res.data.totalCourse);
       } catch (err) {
         console.log(err, "error is in the fetch course  in the fr");
+      } finally {
+        setLoading(false);
       }
-       finally {
-          setLoading(false);
-        }
     };
     fetchCourse();
   }, [refresh, token, user]);
@@ -121,7 +120,6 @@ const page = () => {
     } catch (err) {
       console.log(err, "error is in the delete course admin fr");
     }
-
   };
   // --------------aprove reject course---------------
 
@@ -182,310 +180,335 @@ const page = () => {
     }
   };
 
+  // ---------------dot---------
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDots((prev) => (prev.length === 10 ? "" : prev + "."));
+    }, 100);
 
-
-// ---------------dot---------
-useEffect(() => {
-  const interval = setInterval(() => {
-    setDots(prev => (prev.length === 10 ? "" : prev + "."));
-  }, 100);
-
-  return () => clearInterval(interval);
-}, []);
-
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <>    {loading ? (
+    <>
+      {" "}
+      {loading ? (
         <div className="loading-course">
           <div className="circle-loader"></div>
           <p>Loading courses{dots}</p>
         </div>
-      ) :(
-    <div className="admin-layout">
-        
-      {/* Sidebar */}
-      <div className="sidebar1">
-        <div className="sidebar2">
-          <div className="logo">Admin Panel</div>
+      ) : (
+        <div className="admin-layout">
+          {/* Sidebar */}
+          <div className="sidebar1">
+            <div className="sidebar2">
+              <div className="logo">Admin Panel</div>
 
-          <div className="menu">
-            {/* <div className="menu-item">Dashboard</div> */}
-            <div
-              className="menu-item"
-              onClick={() => router.push("/admin/all-users")}
-            >
-              Users
+              <div className="menu">
+                {/* <div className="menu-item">Dashboard</div> */}
+                <div
+                  className="menu-item"
+                  onClick={() => router.push("/admin/all-users")}
+                >
+                  Users
+                </div>
+                <div
+                  className="menu-item"
+                  onClick={() => router.push("/admin/all-courses")}
+                >
+                  Courses
+                </div>
+                <div
+                  className="menu-item"
+                  onClick={() => router.push("/admin/all-lectures")}
+                >
+                  Lectures
+                </div>
+              </div>
             </div>
-            <div
-              className="menu-item"
-              onClick={() => router.push("/admin/all-courses")}
-            >
-              Courses
+          </div>
+          {/* Main Content */}
+          <div className="main">
+            {/* Top Bar */}
+            <div className="topbar">
+              <div className="title">Dashboard</div>
+
+              <div className="admin-info">
+                <div className="admin-name">Admin</div>
+                <div className="logout" onClick={logout}>
+                  Logout
+                </div>
+              </div>
             </div>
-            <div
-              className="menu-item"
-              onClick={() => router.push("/admin/all-lectures")}
-            >
-              Lectures
+
+            {/* Stats Cards */}
+            <div className="stats">
+              <div className="card users">
+                <div className="card-title">Total Users</div>
+                <div className="card-value">{totalUser}</div>
+              </div>
+
+              <div className="card courses">
+                <div className="card-title">Total Courses</div>
+                <div className="card-value">{totalCourse}</div>
+              </div>
+
+              <div className="card lectures">
+                <div className="card-title">Total Lectures</div>
+                <div className="card-value">{totalLecture}</div>
+              </div>
+            </div>
+
+            {/* Management Sections */}
+            <div className="sections">
+              <div className="section1">
+                <div className="section-title">
+                  <h4>User Management</h4>
+                  <Button
+                    className="view-all-users"
+                    onClick={() => router.push("/admin/all-users")}
+                  >
+                    view all
+                  </Button>
+                </div>
+                <div className="section-box">
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Profile</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                        <th>view single</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {users.map((user, index) => (
+                        <tr key={index}>
+                          <td>
+                            <img
+                              src={
+                                user.profile_pic
+                                  ? `${API_BASE_URL}${user.profile_pic}`
+                                  : "/profile.jpg"
+                              }
+                              alt={user.name}
+                              className="user-avatar"
+                              width={50}
+                              height={50}
+                            />
+                          </td>
+                          <td>{user.name}</td>
+                          <td>{user.email}</td>
+                          <td>{user.role}</td>
+                          <td>
+                            <span
+                              className={`status-dot ${
+                                user.is_deleted ? "inactive" : "active"
+                              }`}
+                            ></span>
+                          </td>
+                          <td>
+                            <Button
+                              variant="contained"
+                              disabled={user.role === "admin"}
+                              className={`btn2 ${
+                                user.is_deleted ? "btn-inactive" : "btn-active"
+                              }`}
+                              onClick={() => DeleteUser(user.id)}
+                            >
+                              {user.role === "admin"
+                                ? "Admin"
+                                : user.is_deleted
+                                ? "Activate"
+                                : "Delete"}
+                            </Button>
+                          </td>
+                          <td>
+                            <Button
+                              onClick={() =>
+                                router.push(
+                                  `/admin/single-user/${courseItem.id}`
+                                )
+                              }
+                            >
+                              view
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div className="section1">
+                <div className="section-title">
+                  <h4>Course Management</h4>
+                  <Button
+                    className="view-all-users"
+                    onClick={() => router.push("/admin/all-courses")}
+                  >
+                    view all
+                  </Button>
+                </div>
+                <div className="section-box">
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Thumbnail</th>
+                        <th>Title</th>
+                        <th>Instructor</th>
+                        <th>Total Lectures</th>
+                        <th>delete/active</th>
+                        <th>delete/active</th>
+                        <th>view single</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {course.map((courseItem, index) => (
+                        <tr key={index}>
+                          <td>
+                            <img
+                              src={`${API_BASE_URL}${courseItem.thumbnail}`}
+                              alt={courseItem.title}
+                              className="course-avatar"
+                              width={50}
+                              height={50}
+                            />
+                          </td>
+                          <td>{courseItem.title}</td>
+                          <td>{courseItem.instructor.name}</td>
+                          <td>{courseItem.total_lectures}</td>
+                          <td>
+                            <span
+                              className={`status-dot ${
+                                courseItem.is_deleted ? "inactive" : "active"
+                              }`}
+                            ></span>
+                            <Button
+                              variant="contained"
+                              className={`btn ${
+                                courseItem.is_deleted
+                                  ? "btn-inactive"
+                                  : "btn-active"
+                              }`}
+                              onClick={() => DeleteCourse(courseItem.id)}
+                            >
+                              {courseItem.is_deleted ? "Activate" : "Delete"}
+                            </Button>
+                          </td>
+
+                          <td>
+                            <Button
+                              variant="contained"
+                              className={`btn ${
+                                courseItem.status === "approved"
+                                  ? "btn-approved"
+                                  : courseItem.status === "rejected"
+                                  ? "btn-rejected"
+                                  : "btn-pending"
+                              }`}
+                              onClick={() => approveCourse(courseItem.id)}
+                            >
+                              {courseItem.status === "approved"
+                                ? "Approved"
+                                : courseItem.status === "rejected"
+                                ? "Rejected"
+                                : "Pending"}
+                            </Button>
+                          </td>
+                          <td>
+                            <Button
+                              onClick={() =>
+                                router.push(
+                                  `/admin/single-course/${courseItem.id}`
+                                )
+                              }
+                            >
+                              {" "}
+                              view
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div className="section1">
+                <div className="section-title">
+                  Lecture Management
+                  <Button
+                    className="view-all-users"
+                    onClick={() => router.push("/admin/all-lectures")}
+                  >
+                    view all
+                  </Button>
+                </div>
+                <div className="section-box">
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>video</th>
+                        <th>Title</th>
+                        <th>Instructor</th>
+                        <th>delete/active</th>
+                        <th>view single</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {lecture.map((lecture, index) => (
+                        <tr key={index}>
+                          <td>
+                            <video
+                              src={`${API_BASE_URL}${lecture.video_url}`}
+                              alt={lecture.title}
+                              className="course-avatar"
+                              width={150}
+                              height={150}
+                            />
+                          </td>
+                          <td>{lecture.title}</td>
+                          <td>{lecture.instructor.name}</td>
+                          <td>
+                            <span
+                              className={`status-dot ${
+                                lecture.is_deleted ? "inactive" : "active"
+                              }`}
+                            ></span>
+                            <Button
+                              variant="contained"
+                              className={`btn ${
+                                lecture.is_deleted
+                                  ? "btn-inactive"
+                                  : "btn-active"
+                              }`}
+                              onClick={() => lectureCourse(lecture.id)}
+                            >
+                              {lecture.is_deleted ? "Activate" : "Delete"}
+                            </Button>
+                          </td>
+                          <td>
+                            <Button
+                              onClick={() =>
+                                router.push(`/admin/single-lecture/${lecture.id}`)
+                              }
+                            >view</Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* Main Content */}
-      <div className="main">
-        {/* Top Bar */}
-        <div className="topbar">
-          <div className="title">Dashboard</div>
-
-          <div className="admin-info">
-            <div className="admin-name">Admin</div>
-            <div className="logout" onClick={logout}>
-              Logout
-            </div>
-          </div>
-        </div>
-
-        {/* Stats Cards */}
-        <div className="stats">
-          <div className="card users">
-            <div className="card-title">Total Users</div>
-            <div className="card-value">{totalUser}</div>
-          </div>
-
-          <div className="card courses">
-            <div className="card-title">Total Courses</div>
-            <div className="card-value">{totalCourse}</div>
-          </div>
-
-          <div className="card lectures">
-            <div className="card-title">Total Lectures</div>
-            <div className="card-value">{totalLecture}</div>
-          </div>
-        </div>
-
-        {/* Management Sections */}
-        <div className="sections">
-          <div className="section1">
-            <div className="section-title">
-              <h4>User Management</h4>
-              <Button
-                className="view-all-users"
-                onClick={() => router.push("/admin/all-users")}
-              >
-                view all
-              </Button>
-            </div>
-            <div className="section-box">
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th>Profile</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                    <th>view single</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {users.map((user, index) => (
-                    <tr key={index}>
-                      <td>
-                        <img
-                          src={
-                            user.profile_pic
-                              ? `${API_BASE_URL}${user.profile_pic}`
-                              : "/profile.jpg"
-                          }
-                          alt={user.name}
-                          className="user-avatar"
-                          width={50}
-                          height={50}
-                        />
-                      </td>
-                      <td>{user.name}</td>
-                      <td>{user.email}</td>
-                      <td>{user.role}</td>
-                      <td>
-                        <span
-                          className={`status-dot ${
-                            user.is_deleted ? "inactive" : "active"
-                          }`}
-                        ></span>
-                      </td>
-                      <td>
-                        <Button
-                          variant="contained"
-                          disabled={user.role === "admin"}
-                          className={`btn2 ${
-                            user.is_deleted ? "btn-inactive" : "btn-active"
-                          }`}
-                          onClick={() => DeleteUser(user.id)}
-                        >
-                          {user.role === "admin"
-                            ? "Admin"
-                            : user.is_deleted
-                            ? "Activate"
-                            : "Delete"}
-                        </Button>
-                      </td>
-                      <td><Button onClick={()=>router.push(`/admin/single-user/${courseItem.id}`)}> view</Button></td>
-
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div className="section1">
-            <div className="section-title">
-              <h4>Course Management</h4>
-              <Button
-                className="view-all-users"
-                onClick={() => router.push("/admin/all-courses")}
-              >
-                view all
-              </Button>
-            </div>
-            <div className="section-box">
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th>Thumbnail</th>
-                    <th>Title</th>
-                    <th>Instructor</th>
-                    <th>Total Lectures</th>
-                    <th>delete/active</th>
-                    <th>delete/active</th>
-                    <th>view single</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-                  {course.map((courseItem, index) => (
-                    <tr key={index}>
-                      <td>
-                        <img
-                          src={`${API_BASE_URL}${courseItem.thumbnail}`}
-                          alt={courseItem.title}
-                          className="course-avatar"
-                          width={50}
-                          height={50}
-                        />
-                      </td>
-                      <td>{courseItem.title}</td>
-                      <td>{courseItem.instructor.name}</td>
-                      <td>{courseItem.total_lectures}</td>
-                      <td>
-                        <span
-                          className={`status-dot ${
-                            courseItem.is_deleted ? "inactive" : "active"
-                          }`}
-                        ></span>
-                        <Button
-                          variant="contained"
-                          className={`btn ${
-                            courseItem.is_deleted
-                              ? "btn-inactive"
-                              : "btn-active"
-                          }`}
-                          onClick={() => DeleteCourse(courseItem.id)}
-                        >
-                          {courseItem.is_deleted ? "Activate" : "Delete"}
-                        </Button>
-                      </td>
-
-                      <td>
-
-                        <Button
-                          variant="contained"
-                          className={`btn ${
-                            courseItem.status === "approved"
-                              ? "btn-approved"
-                              : courseItem.status === "rejected"
-                              ? "btn-rejected"
-                              : "btn-pending"
-                          }`}
-                          onClick={() => approveCourse(courseItem.id)}
-                        >
-                          {courseItem.status === "approved"
-                            ? "Approved"
-                            : courseItem.status === "rejected"
-                            ? "Rejected"
-                            : "Pending"}
-                        </Button>
-                      </td>
-                      <td><Button onClick={()=>router.push(`/admin/single-course/${courseItem.id}`)}> view</Button></td>
-
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div className="section1">
-            <div className="section-title">
-              Lecture Management
-              <Button
-                className="view-all-users"
-                onClick={() => router.push("/admin/all-lectures")}
-              >
-                view all
-              </Button>
-            </div>
-            <div className="section-box">
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th>video</th>
-                    <th>Title</th>
-                    <th>Instructor</th>
-                    <th>delete/active</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {lecture.map((lecture, index) => (
-                    <tr key={index}>
-                      <td>
-                        <video
-                          src={`${API_BASE_URL}${lecture.video_url}`}
-                          alt={lecture.title}
-                          className="course-avatar"
-                          width={150}
-                          height={150}
-                        />
-                      </td>
-                      <td>{lecture.title}</td>
-                      <td>{lecture.instructor.name}</td>
-                      <td>
-                        <span
-                          className={`status-dot ${
-                            lecture.is_deleted ? "inactive" : "active"
-                          }`}
-                        ></span>
-                        <Button
-                          variant="contained"
-                          className={`btn ${
-                            lecture.is_deleted ? "btn-inactive" : "btn-active"
-                          }`}
-                          onClick={() => lectureCourse(lecture.id)}
-                        >
-                          {lecture.is_deleted ? "Activate" : "Delete"}
-                        </Button>
-                        
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>)}
+      )}
     </>
   );
 };

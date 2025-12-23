@@ -96,7 +96,7 @@ const profileSrc = user?.profile
                 </select>
               )}
               
-              <button>completed coursers</button>
+              {/* <button>completed coursers</button> */}
             </div>
             <div className="sb-sct2-cnt2"></div>
             {/* <div className="sb-sct2-cnt3">Settings</div> */}

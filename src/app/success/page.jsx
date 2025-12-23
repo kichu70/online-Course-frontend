@@ -15,16 +15,16 @@ const Success = () => {
   const sessionId = searchParams.get("session_id");
 
   useEffect(() => {
-  if (!sessionId) return;
-  if (!token) {
-    const timeout = setTimeout(() => {
+    if (!sessionId) return;
+    if (!token) {
+      const timeout = setTimeout(() => {
         window.location.reload();
       }, 10);
       return () => clearTimeout(timeout);
-  }else{
-    handlePaidEnroll();
-  }
-}, [sessionId, token]);
+    } else {
+      handlePaidEnroll();
+    }
+  }, [sessionId, token]);
 
   const handlePaidEnroll = async () => {
     try {
@@ -44,11 +44,14 @@ const Success = () => {
       toast.success("Payment Successful 🎉");
 
       setTimeout(() => {
-        router.back();
-      }, 1500);
+        router.push("/");
+      }, 3500);
     } catch (err) {
       console.log(err, "Error in paid enrollment");
       toast.error("Payment verified but enrollment failed!");
+      setTimeout(() => {
+        router.push("/");
+      }, 1500);
     }
   };
 

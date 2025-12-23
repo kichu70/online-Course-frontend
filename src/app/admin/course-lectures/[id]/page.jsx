@@ -149,7 +149,7 @@ const Page = () => {
                 // sx={{ width: 400, cursor: "pointer" }}
                 onClick={() =>
                   router.push(
-                    `/admin/single-lecture/${lec._id}?lectureId=${lec._id}`
+                    `/admin/single-lecture/${lec._id}`
                   )
                 }
               >
