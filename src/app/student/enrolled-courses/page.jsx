@@ -95,6 +95,9 @@ const page = () => {
                     title="green iguana"
                   />
                   <CardContent>
+                    <h3 className="price">
+                    ₹{course.price}
+                    </h3>
                     <Typography
                       className="title"
                       gutterBottom
@@ -119,6 +122,7 @@ const page = () => {
                     >
                       {course.description}
                     </Typography>
+
                   </CardContent>
                   <CardActions
                     onClick={(e) => {
