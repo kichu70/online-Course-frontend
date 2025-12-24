@@ -104,10 +104,12 @@ const Navbar = () => {
                 router.push("/instructor");
               }}
               variant="contained"
-              sx={{ margin: "20px", background: "#4323 !important" }}
+              className="go-instructor-home"
+              
             >
               go to instructor home
             </Button>
+            
           </div>
           <div className="nav-cnt2"></div>
           <div className="nav-cnt3">
