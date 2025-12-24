@@ -1,6 +1,7 @@
-.enrolled{
+.enrolled {
   margin-top: 150px;
-}.no-enrolled-course {
+}
+.no-enrolled-course {
   background: linear-gradient(
     rgb(255, 255, 255),
     rgba(230, 174, 174, 0.696),
@@ -30,13 +31,15 @@
   gap: 10px;
   padding: 20px;
 }
-.enrollled-sct1-cnt1 .card{
-    margin: auto;
-    width: 100%;
-    min-height: fit-content;
+.enrollled-sct1-cnt1 .card {
+  margin: auto;
+  width: 100%;
+  min-height: fit-content;
+  height: 100%;
+  min-height: 600px;
 }
 
-.view-h1{
+.view-h1 {
   text-align: center;
   color: rgb(99, 99, 99);
 }

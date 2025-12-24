@@ -19,6 +19,7 @@ const EditCourse = ({ open, course, id, onClose }) => {
   const [courseName, setCourseName] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
   const [coursePrice, setCoursePrice] = useState("");
+  const [thumbnail, setThumbnail] = useState(null);
 
   useEffect(() => {
     if (course) {
@@ -27,15 +28,22 @@ const EditCourse = ({ open, course, id, onClose }) => {
       setCoursePrice(course.price || "");
     }
   }, [course]);
+
+  const handleFileChange = (e) => {
+    setThumbnail(e.target.files[0]);
+  };
+
   const UpdateCourse = async () => {
     try {
+      const formData = new FormData();
+      formData.append("title", courseName);
+      formData.append("description", courseDescription);
+      formData.append("price", coursePrice);
+      if (thumbnail) formData.append("thumbnail", thumbnail);
+
       const res = await axios.put(
         `${INSTRUCTOR_API.UPDATE_COURSE}?id=${id}`,
-        {
-          title: courseName,
-          description: courseDescription,
-          price: coursePrice,
-        },
+        formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -99,6 +107,7 @@ const EditCourse = ({ open, course, id, onClose }) => {
             type="number"
             focused
           />
+          <input type="file" accept="image/*" onChange={handleFileChange} />
           <Button
             className="updatebtn"
             onClick={() => {
