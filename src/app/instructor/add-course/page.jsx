@@ -9,9 +9,11 @@ import { useAuth } from "@/lib/auth";
 
 import Navbar from "@/components/navbar/Navbar"
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const AddCoursePage = () => {
   const { token } = useAuth();
+  const router = useRouter();
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -59,6 +61,9 @@ const AddCoursePage = () => {
       setPrice("");
       setThumbnail(null);
       setPreview(null);
+      setTimeout(() => {
+        router.back();
+      }, 1500);
     } catch (err) {
       console.log(err);
 

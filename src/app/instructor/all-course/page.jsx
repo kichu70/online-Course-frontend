@@ -23,14 +23,16 @@ const page = () => {
   const [enrolledStudents, setEnrolledStudents] = useState([]);
   const { token, user } = useAuth();
   const router = useRouter();
+  const [page, setPage] = useState(1);
 
+  const [totalPage, setTotalPage] = useState();
   // ---------------------fetch course------------------
 
   useEffect(() => {
     try {
       const fetchCourse = async () => {
         try {
-          const res = await axios.get(`${INSTRUCTOR_API.TOP_RATED}`, {
+          const res = await axios.get(`${INSTRUCTOR_API.TOP_RATED}?page=${page}&limit=9`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           console.log(res.data.data);
@@ -39,6 +41,7 @@ const page = () => {
             ...rest,
           }));
           setCourse(idReplace);
+          setTotalPage(res.data.totalPage);
         } catch (err) {
           console.log(err, "error is in the fr fetchdata ");
         }
@@ -47,7 +50,7 @@ const page = () => {
     } catch (err) {
       console.log(err, "error is in the fr fetchcourse-instr");
     }
-  }, [token, user]);
+  }, [token, user,page]);
 
 
 
@@ -146,8 +149,27 @@ const page = () => {
             </Card>
           ))}
         </div>
-        <div className="allCourse-sct1-ctn2"></div>
-        <div className="allCourse-sct1-ctn3"></div>
+      <div className="pagination0">
+        <button
+          className="pages0"
+          onClick={() => setPage((p) => Math.max(p - 1, 1))}
+          disabled={page === 1}
+        >
+          Prev
+        </button>
+
+        <span style={{ margin: "0 10px" }}>
+          {page} / {totalPage}
+        </span>
+
+        <button
+          className="pages0"
+          onClick={() => setPage((p) => Math.min(p + 1, totalPage))}
+          disabled={page === totalPage}
+        >
+          Next
+        </button>
+      </div>
       </div>
     </div>
   );

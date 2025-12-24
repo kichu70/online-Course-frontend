@@ -281,7 +281,7 @@ const page = () => {
                         <th>Role</th>
                         <th>Status</th>
                         <th>Action</th>
-                        <th>view single</th>
+                        {/* <th>view single</th> */}
                       </tr>
                     </thead>
                     <tbody>
@@ -327,15 +327,7 @@ const page = () => {
                             </Button>
                           </td>
                           <td>
-                            <Button
-                              onClick={() =>
-                                router.push(
-                                  `/admin/single-user/${courseItem.id}`
-                                )
-                              }
-                            >
-                              view
-                            </Button>
+
                           </td>
                         </tr>
                       ))}

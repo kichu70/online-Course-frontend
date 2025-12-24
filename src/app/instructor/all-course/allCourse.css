@@ -16,6 +16,34 @@ margin: 150px 0 0 0;
     width: 100%;
 }
 
+.pages0 {
+  font-size: 16px !important;
+  color: rgb(131, 121, 110);
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  border: none;
+  background: none;
+  border-bottom: 2px solid rgb(151, 107, 10);
+  border-radius: 5px;
+}
+.pagination0 {
+  max-width: fit-content;
+  margin:  auto;
+  padding: 50px;
+}
+.pagination0 span {
+  font-family: cursive;
+  color: rgb(71, 63, 52);
+}
+.pages0:hover {
+  border-bottom: 2px solid rgb(242, 60, 19);
+  transform: scale(1.1);
+  color: rgb(223, 194, 25);
+  transition: 0.3s;
+}
+
+
+
+
 /* ================responsive=============================================== */
 
 
