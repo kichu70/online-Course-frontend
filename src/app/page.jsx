@@ -36,7 +36,7 @@ export default function Home() {
     onFreeEnroll,
     enrolledCourses,
     setEnrolledCourses,
-    isInCart
+    isInCart,
   } = useAuth();
 
   const router = useRouter();
@@ -49,20 +49,19 @@ export default function Home() {
   const [loading, setLoading] = useState(true); //this is used to loading time show the loading pera
   const [networkError, setNetworkError] = useState(false); //this is used to  show the network error pera
 
-// useEffect(() => {
-//   if (!token || !user) return;
+  // useEffect(() => {
+  //   if (!token || !user) return;
 
-//   if (user.role === "admin") {
-//     router.replace("/admin");
-//     return;
-//   }
+  //   if (user.role === "admin") {
+  //     router.replace("/admin");
+  //     return;
+  //   }
 
-//   if (user.role === "instructor") {
-//     router.replace("/instructor");
-//     return;
-//   }
-// }, [token, user]);
-
+  //   if (user.role === "instructor") {
+  //     router.replace("/instructor");
+  //     return;
+  //   }
+  // }, [token, user]);
 
   // Check if we came from /success page----------to reload-----------------------
   useEffect(() => {
@@ -128,8 +127,6 @@ export default function Home() {
     callback();
   };
 
-
-
   // *******************************************************
   return (
     <div>
@@ -138,8 +135,7 @@ export default function Home() {
 
       {loading ? (
         <div className="loading-course">
-<div className="circle-loader"></div>
-
+          <div className="circle-loader"></div>
 
           <p>Loading courses...</p>
         </div>
@@ -293,6 +289,16 @@ export default function Home() {
                     )}
                     <Button
                       size="small"
+                      disabled={isInCart(BCAcourse[0].id)}
+                      sx={{
+                        textDecoration: isInCart(BCAcourse[0].id)
+                          ? "line-through"
+                          : "none",
+                        opacity: isInCart(BCAcourse[0].id) ? 0.5 : 1,
+                        cursor: isInCart(BCAcourse[0].id)
+                          ? "not-allowed"
+                          : "pointer",
+                      }}
                       onClick={(e) => {
                         e.stopPropagation();
                         reusebleFunction(() => addToCart(BCAcourse[0]));

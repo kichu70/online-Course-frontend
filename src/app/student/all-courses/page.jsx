@@ -17,6 +17,7 @@ import Typography from "@mui/material/Typography";
 
 import { handlePayment } from "@/components/payment/paymentButton";
 import { useRouter, useSearchParams } from "next/navigation";
+import Rating from "@mui/material/Rating";
 
 const page = () => {
   const [course, setCourse] = useState([]);
@@ -102,6 +103,12 @@ const page = () => {
                 />
 
                 <CardContent>
+                  <Rating
+                    name="course-rating"
+                    value={course.average_rating}
+                    precision={0.5}
+                    readOnly
+                  />
                   <Typography gutterBottom variant="h5">
                     {course.title}
                   </Typography>
@@ -144,9 +151,7 @@ const page = () => {
                       size="small"
                       onClick={(e) => {
                         e.stopPropagation();
-                        reusebleFunction(() =>
-                          handlePayment(course.id, token)
-                        );
+                        reusebleFunction(() => handlePayment(course.id, token));
                       }}
                     >
                       Buy Now
@@ -156,9 +161,7 @@ const page = () => {
                       size="small"
                       onClick={(e) => {
                         e.stopPropagation();
-                        reusebleFunction(() =>
-                          onFreeEnroll(course.id)
-                        );
+                        reusebleFunction(() => onFreeEnroll(course.id));
                       }}
                     >
                       Enroll
@@ -166,7 +169,14 @@ const page = () => {
                   )}
 
                   <Button
-                  disabled={isInCart(course.id)}
+                    disabled={isInCart(course.id)}
+                    sx={{
+                      textDecoration: isInCart(course.id)
+                        ? "line-through"
+                        : "none",
+                      opacity: isInCart(course.id) ? 0.5 : 1,
+                      cursor: isInCart(course.id) ? "not-allowed" : "pointer",
+                    }}
                     size="small"
                     onClick={(e) => {
                       e.stopPropagation();
