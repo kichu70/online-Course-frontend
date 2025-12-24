@@ -400,6 +400,7 @@ export default function Home() {
                             {course.category}
                           </Typography>
                           <Typography
+                          className="description"
                             variant="body2"
                             sx={{ color: "text.secondary" }}
                           >
