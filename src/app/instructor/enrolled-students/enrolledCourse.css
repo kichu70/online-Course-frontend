@@ -1,0 +1,23 @@
+.enrolled-student-list2{
+  max-width: 1250px;
+  margin:150px auto;
+  padding: 20px;
+}
+.my-table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.table-head{
+  border: 1px solid black;
+  padding: 10px;
+  font-size: 30px;
+  text-transform: capitalize;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow';
+}
+.table-cell {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: left;
+}

@@ -91,7 +91,7 @@ const Navbar = () => {
       user?.role === "instructor" ? (
         <div className="navbar-cnt1">
           <div className="nav-cnt1">
-            <Link href={"/instructor"}>
+            <Link href={"/"}>
               <Image
                 className="logo"
                 src={EduclassLogo}
@@ -99,6 +99,15 @@ const Navbar = () => {
                 height={80}
               />
             </Link>
+            <Button
+              onClick={() => {
+                router.push("/instructor");
+              }}
+              variant="contained"
+              sx={{ margin: "20px", background: "#4323 !important" }}
+            >
+              go to instructor home
+            </Button>
           </div>
           <div className="nav-cnt2"></div>
           <div className="nav-cnt3">
