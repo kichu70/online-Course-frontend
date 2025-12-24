@@ -105,68 +105,74 @@ const page = () => {
                 </tr>
               </thead>
               <tbody>
-                {course.map((courseItem, index) => (
-                  <tr key={index}>
-                    <td>
-                      <img
-                        src={`${API_BASE_URL}${courseItem.thumbnail}`}
-                        alt={courseItem.title}
-                        className="course-avatar1"
-                        height={150}
-                      />
-                    </td>
-                    <td>{courseItem.title}</td>
-                    <td>{courseItem.instructor.name}</td>
-                    <td>{courseItem.total_lectures}</td>
-                    <td>
-                      <span
-                        className={`status-dot1 ${
-                          courseItem.is_deleted ? "inactive" : "active"
-                        }`}
-                      ></span>
-                      <Button
-                        variant="contained"
-                        className={`btn ${
-                          courseItem.is_deleted
-                            ? "btn-inactive1"
-                            : "btn-active1"
-                        }`}
-                        onClick={() => DeleteCourse(courseItem.id)}
-                      >
-                        {courseItem.is_deleted ? "Activate" : "Delete"}
-                      </Button>
-                    </td>
+                {course
+                  .slice()
+                  .sort((a, b) => {
+                    if (a.status === "pending" )
+                      return -1;
+                  })
+                  .map((courseItem, index) => (
+                    <tr key={index}>
+                      <td>
+                        <img
+                          src={`${API_BASE_URL}${courseItem.thumbnail}`}
+                          alt={courseItem.title}
+                          className="course-avatar1"
+                          height={150}
+                        />
+                      </td>
+                      <td>{courseItem.title}</td>
+                      <td>{courseItem.instructor.name}</td>
+                      <td>{courseItem.total_lectures}</td>
+                      <td>
+                        <span
+                          className={`status-dot1 ${
+                            courseItem.is_deleted ? "inactive" : "active"
+                          }`}
+                        ></span>
+                        <Button
+                          variant="contained"
+                          className={`btn ${
+                            courseItem.is_deleted
+                              ? "btn-inactive1"
+                              : "btn-active1"
+                          }`}
+                          onClick={() => DeleteCourse(courseItem.id)}
+                        >
+                          {courseItem.is_deleted ? "Activate" : "Delete"}
+                        </Button>
+                      </td>
 
-                    <td>
-                      <span
-                        className={`status-dot1 ${
-                          courseItem.status === "approved"
-                            ? "active"
+                      <td>
+                        <span
+                          className={`status-dot1 ${
+                            courseItem.status === "approved"
+                              ? "active"
+                              : courseItem.status === "rejected"
+                              ? "inactive"
+                              : "pending-dot"
+                          }`}
+                        ></span>
+                        <Button
+                          variant="contained"
+                          className={`btn ${
+                            courseItem.status === "approved"
+                              ? "btn-approved1"
+                              : courseItem.status === "rejected"
+                              ? "btn-rejected1"
+                              : "btn-pending1"
+                          }`}
+                          onClick={() => approveCourse(courseItem.id)}
+                        >
+                          {courseItem.status === "approved"
+                            ? "Approved"
                             : courseItem.status === "rejected"
-                            ? "inactive"
-                            : "pending-dot"
-                        }`}
-                      ></span>
-                      <Button
-                        variant="contained"
-                        className={`btn ${
-                          courseItem.status === "approved"
-                            ? "btn-approved1"
-                            : courseItem.status === "rejected"
-                            ? "btn-rejected1"
-                            : "btn-pending1"
-                        }`}
-                        onClick={() => approveCourse(courseItem.id)}
-                      >
-                        {courseItem.status === "approved"
-                          ? "Approved"
-                          : courseItem.status === "rejected"
-                          ? "Rejected"
-                          : "Pending"}
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
+                            ? "Rejected"
+                            : "Pending"}
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
