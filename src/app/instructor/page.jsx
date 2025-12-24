@@ -77,11 +77,12 @@ const page = () => {
           const res = await axios.get(`${INSTRUCTOR_API.ENROLLED_STUDENTS}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
-          console.log(res.data.data);
           const idReplace = res.data.data.map(({ _id, ...rest }) => ({
             id: _id,
             ...rest,
           }));
+          console.log(res.data.data);
+
           setEnrolledStudents(idReplace.slice(0,5));
         } catch (err) {
           console.log(err, "error is inside the fetch enrolled student");
@@ -187,13 +188,16 @@ const page = () => {
                     {index+1}) <span>{enr.student.name} </span>
                     </td>
                     <td className="table-cell">
-                      {enr.course.title}
+                      {enr.course?.title}
                     </td>
                     <td className="table-cell"><span className="price">₹ {enr.price_at_purchase}</span></td>
                   </tr>
                 </tbody>
+
               ))}
             </table>
+          <Button  variant="contained" onClick={()=>router.push('/instructor/enrolled-students')}>view all</Button>
+
           </div>
         </div>
       </div>
