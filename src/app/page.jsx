@@ -86,7 +86,7 @@ export default function Home() {
         setBCACourse(
           bcaRes.data.data.map(({ _id, ...rest }) => ({ id: _id, ...rest }))
         );
-
+        console.log(freeRes.data)
         setFreeCourse(
           freeRes.data.data
             .map(({ _id, ...rest }) => ({ id: _id, ...rest }))
@@ -218,7 +218,7 @@ export default function Home() {
                       total lectures : {BCAcourse[0]?.total_lectures}
                     </Typography>
                     <Typography gutterBottom variant="h5" component="div">
-                      Instructor:<span>{BCAcourse[0]?.instructor_name}</span>
+                      Instructor:<span>{BCAcourse[0]?.instructor.name}</span>
                     </Typography>
                     <Typography
                       gutterBottom

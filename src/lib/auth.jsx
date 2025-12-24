@@ -160,6 +160,7 @@ export const AuthProvider = ({ children, cookieData }) => {
   // ------free enroll add -----to avoid  reapet ----------------
 
   const onFreeEnroll = async (courseId) => {
+    if(!token)return;
     try {
       const res = await axios.post(
         `${STUDENT_API.FREE_ENROLL}?courseId=${courseId}`,
@@ -190,8 +191,11 @@ export const AuthProvider = ({ children, cookieData }) => {
           const res = await axios.get(`${STUDENT_API.ENROLLED_COURSES}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
-          const courseIds = res.data.data.map((item) => item.course._id);
-          setEnrolledCourses(courseIds);
+          const courseIds = res.data.data
+  .filter((item) => item.course) 
+  .map((item) => (typeof item.course === "string" ? item.course : item.course._id));
+
+setEnrolledCourses(courseIds);
           // console.log("Enrolled Courses:", courseIds);
         } catch (err) {
           console.log("Error fetching enrolled courses", err);
