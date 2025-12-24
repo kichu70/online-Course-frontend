@@ -126,6 +126,7 @@ const page = () => {
                     }}
                   >
             <Button onClick={()=>router.push(`/student/track-progress/${course._id}`)}>view progress</Button>
+            <Button onClick={()=>router.push(`/student/review/${course._id}`)}>add review</Button>
 
                   </CardActions>
                 </Card>
