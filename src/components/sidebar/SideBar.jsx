@@ -127,7 +127,7 @@ const profileSrc = user?.profile
             <div className="sb-sct1-cnt2">
               <img
                 alt="Profile"
-                src={user?.profile ? user.profile : "/profile.jpg"}
+                src={profileSrc}
                 style={{
                   width: "80px",
                   height: "80px",
