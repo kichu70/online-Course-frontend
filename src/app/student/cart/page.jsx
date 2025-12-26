@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import { handlePayment } from "@/components/payment/paymentButton";
 import Rating from "@mui/material/Rating";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const {
@@ -31,6 +32,8 @@ const page = () => {
   const [cart, setcart] = useState([]);
   const [selectedCourse, setSeletedCourse] = useState([]);
   const [total, setTotal] = useState(0);
+    const router = useRouter();
+  
 
   useEffect(() => {
     if (!cartItems || cartItems.length === 0) {
