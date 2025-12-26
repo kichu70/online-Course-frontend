@@ -19,6 +19,9 @@ const page = () => {
 
   const [refresh, setRefresh] = useState(false);
 
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState();
+
   const [totalCourse, setTotalCourse] = useState(0);
   const [course, setCourse] = useState([]);
 
@@ -28,7 +31,7 @@ const page = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const res = await axios.get(`${ADMIN_API.ALL_COURSES}`, {
+        const res = await axios.get(`${ADMIN_API.ALL_COURSES}?page=${page}&limit=8`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -38,13 +41,15 @@ const page = () => {
           ...rest,
         }));
         setCourse(idReplace);
+        console.log(res.data)
         setTotalCourse(res.data.totalCourse);
+         setTotalPage(res.data.totalPage);
       } catch (err) {
         console.log(err, "error is in the fetch course  in the fr");
       }
     };
     fetchCourse();
-  }, [refresh, token, user]);
+  }, [refresh, token, user,page]);
 
   // --------------delete reactivate course---------------
 
@@ -108,8 +113,7 @@ const page = () => {
                 {course
                   .slice()
                   .sort((a, b) => {
-                    if (a.status === "pending" )
-                      return -1;
+                    if (a.status === "pending") return -1;
                   })
                   .map((courseItem, index) => (
                     <tr key={index}>
@@ -176,6 +180,27 @@ const page = () => {
               </tbody>
             </table>
           </div>
+        </div>
+        <div className="pagination0">
+          <button
+            className="pages0"
+            onClick={() => setPage((p) => Math.max(p - 1, 1))}
+            disabled={page === 1}
+          >
+            Prev
+          </button>
+
+          <span style={{ margin: "0 10px" }}>
+            {page} / {totalPage}
+          </span>
+
+          <button
+            className="pages0"
+            onClick={() => setPage((p) => Math.min(p + 1, totalPage))}
+            disabled={page === totalPage}
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>
