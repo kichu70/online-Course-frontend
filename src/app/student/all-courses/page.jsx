@@ -19,7 +19,7 @@ import { handlePayment } from "@/components/payment/paymentButton";
 import { useRouter, useSearchParams } from "next/navigation";
 import Rating from "@mui/material/Rating";
 
-const page = () => {
+const AllCoursePage  = () => {
   const [course, setCourse] = useState([]);
   const router = useRouter();
 
@@ -43,26 +43,21 @@ const page = () => {
   const search = searchParams.get("search") || "";
 
   // SEARCH FILTER (SAFE)
-  const filteredCourses = search
-    ? course.filter((c) =>
-        `${c.title} ${c.category} ${c.description} ${c.instructor_name} ${c.price}`
-          .toLowerCase()
-          .includes(search.toLowerCase())
-      )
-    : course;
+   
 
   // -------- FETCH COURSES ----------
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `${STUDENT_API.ALL_COURSE}?page=${page}&limit=8`
+          `${STUDENT_API.ALL_COURSE}?page=${page}&limit=8&search=${search}`
         );
         const idReplace = res.data.data.map(({ _id, ...rest }) => ({
           id: _id,
           ...rest,
         }));
         setCourse(idReplace);
+        console.log(res.data)
         setTotalPage(res.data.totalPage);
       } catch (err) {
         setNetworkError(true);
@@ -72,7 +67,7 @@ const page = () => {
       }
     };
     fetchData();
-  }, [page]);
+  }, [page,search]);
 
   return (
     <div className="all-course">
@@ -88,12 +83,12 @@ const page = () => {
         </div>
       ) : (
         <div className="all-crs-cnt1">
-          {filteredCourses.length === 0 ? (
+          {course.length === 0 ? (
             <p style={{ textAlign: "center", width: "100%" }}>
               No courses found
             </p>
           ) : (
-            filteredCourses.map((course) => (
+            course.map((course) => (
               <Card sx={{ maxWidth: 445 }} key={course.id} className="card">
                 <CardMedia
                   className="card-media"
@@ -114,7 +109,7 @@ const page = () => {
                   </Typography>
 
                   <Typography gutterBottom variant="h6">
-                    Instructor: <span>{course.instructor_name}</span>
+                    Instructor: <span>{course.instructor?.name}</span>
                   </Typography>
 
                   <Typography gutterBottom variant="h6">
@@ -217,4 +212,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default AllCoursePage ;
