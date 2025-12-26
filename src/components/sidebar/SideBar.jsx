@@ -53,7 +53,6 @@ const profileSrc = user?.profile
     : `${API_BASE_URL}${user.profile}`
   : "/profile.jpg";
 
-
   return (
     <div ref={sidebarRef} className={`sidebar ${isOpen ? "open" : ""}`}>
       {user?.role === "student" ? (
@@ -96,10 +95,8 @@ const profileSrc = user?.profile
                 </select>
               )}
               
-              {/* <button>completed coursers</button> */}
             </div>
             <div className="sb-sct2-cnt2"></div>
-            {/* <div className="sb-sct2-cnt3">Settings</div> */}
           </div>
 
           {/* Section 3 */}
