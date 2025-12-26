@@ -14,7 +14,20 @@
     
     text-shadow:rgb(82, 76, 76) 20 20 20;
 }
-
+.all-course-cnt-1 .title{
+    display: -webkit-box;     
+  -webkit-line-clamp: 1;     
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.all-course-cnt-1 .description{
+      display: -webkit-box;     
+  -webkit-line-clamp: 2;     
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 /* ----------------------------cnt1 -----------------------*/
 
